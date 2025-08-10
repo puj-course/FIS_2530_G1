@@ -1,2 +1,16 @@
 # FIS_2025_G1
 Proyecto en curso de la asignatura de Fundamentos de Ingeniería de Software
+
+BioPrint es un proyecto para la materia Fundamentos de Ingeniería, desarrollado por Richard Navas, Sebastián Gaibor, Dana Trujillo y Laura Ladino.
+
+Este proyecto se inspira en los Objetivos de Desarrollo Sostenible (ODS) y en la encíclica Laudato Si’, buscando fomentar la conciencia ambiental y el cambio de hábitos hacia prácticas más sostenibles.
+
+El propósito es crear una aplicación interactiva que permita a los usuarios:
+
+- Calcular su huella de carbono personal a partir de sus hábitos cotidianos.
+
+- Visualizar el impacto ambiental de sus acciones.
+
+- Recibir recomendaciones personalizadas para reducir su huella.
+
+- Hacer seguimiento a su progreso a lo largo del tiempo.
