@@ -14,3 +14,16 @@ El propósito es crear una aplicación interactiva que permita a los usuarios:
 - Recibir recomendaciones personalizadas para reducir su huella.
 
 - Hacer seguimiento a su progreso a lo largo del tiempo.
+
+*Objetivos*
+General
+Desarrollar una aplicación que permita a los usuarios calcular su huella de carbono personal y recibir recomendaciones personalizadas para reducirla, fomentando la adopción de hábitos sostenibles.
+
+Específicos
+- Recolectar información sobre transporte, consumo energético y alimentación mediante una interfaz intuitiva.
+
+- Implementar algoritmos que estimen la huella de carbono en unidades comprensibles.
+
+- Presentar resultados de forma visual y comparativa.
+
+- Brindar recomendaciones personalizadas para reducir el impacto ambiental.
