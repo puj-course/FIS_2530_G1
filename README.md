@@ -28,16 +28,3 @@ Específicos
 - Presentar resultados de forma visual y comparativa.
 
 - Brindar recomendaciones personalizadas para reducir el impacto ambiental.
-
-*Boilerplate*
-
-BioPrint/
-├── src/                # Código fuente principal
-│   ├── components/     # Componentes reutilizables
-│   ├── pages/          # Vistas principales
-│   ├── services/       # Lógica de negocio y cálculos de huella
-│   ├── assets/         # Imágenes, íconos, estilos
-│   └── utils/          # Funciones auxiliares
-├── public/             # Archivos estáticos
-├── package.json        # Configuración y dependencias
-└── README.md           # Documentación del proyecto
