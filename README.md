@@ -28,3 +28,5 @@ Específicos
 - Presentar resultados de forma visual y comparativa.
 
 - Brindar recomendaciones personalizadas para reducir el impacto ambiental.
+
+Richard Navas:https://github.com/richnav221
