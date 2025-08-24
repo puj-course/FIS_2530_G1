@@ -28,3 +28,5 @@ Específicos
 - Presentar resultados de forma visual y comparativa.
 
 - Brindar recomendaciones personalizadas para reducir el impacto ambiental.
+
+- Sebastian Alejandro Gaibor Gonzalez  → [GitHub](https://github.com/SebastianGaibor)
