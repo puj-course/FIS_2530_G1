@@ -24,4 +24,10 @@ Específicos
 * Implementar algoritmos que estimen la huella de carbono en unidades comprensibles.
 * Presentar resultados de forma visual y comparativa.
 * Brindar recomendaciones personalizadas para reducir el impacto ambiental.
-* Dana Lizeth Trujillo Rivera →https://\[GitHub](https://github.com/daliz-18)
+
+Usuarios:
+- Dana Lizeth Trujillo Rivera →https://\[GitHub](https://github.com/daliz-18)
+
+- Laura Valenntina Ladino Rivera  → [GitHub](https://github.com/githublauraa)
+
+- Richard Navas → [GitHub] (https://github.com/richnav221)
