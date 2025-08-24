@@ -29,4 +29,9 @@ Específicos
 
 - Brindar recomendaciones personalizadas para reducir el impacto ambiental.
 
+##Miembros del proyecto
+- Laura Valenntina Ladino Rivera  → [GitHub](https://github.com/githublauraa)
+
+- Richard Navas → [GitHub] (https://github.com/richnav221)
+
 - Sebastian Alejandro Gaibor Gonzalez  → [GitHub](https://github.com/SebastianGaibor)
