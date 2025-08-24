@@ -26,8 +26,10 @@ Específicos
 * Brindar recomendaciones personalizadas para reducir el impacto ambiental.
 
 Usuarios:
-- Dana Lizeth Trujillo Rivera →https://\[GitHub](https://github.com/daliz-18)
+- Dana Lizeth Trujillo Rivera → [GitHub](https://github.com/daliz-18)
+
+- Sebastian Alejandro Gaibor Gonzalez  → [GitHub](https://github.com/SebastianGaibor)
 
 - Laura Valenntina Ladino Rivera  → [GitHub](https://github.com/githublauraa)
 
-- Richard Navas → [GitHub] (https://github.com/richnav221)
+- Richard Arley Navas Peñaranda → [GitHub](https://github.com/richnav221)
