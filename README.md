@@ -29,4 +29,7 @@ Específicos
 
 - Brindar recomendaciones personalizadas para reducir el impacto ambiental.
 
-Richard Navas:https://github.com/richnav221
+
+##Miembros del proyecto
+- Laura Valenntina Ladino Rivera  → [GitHub](https://github.com/githublauraa)
+- Richard Arley Navas Peñaranda → [GitHub](https://github.com/richnav221)
