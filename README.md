@@ -28,3 +28,6 @@ Específicos
 - Presentar resultados de forma visual y comparativa.
 
 - Brindar recomendaciones personalizadas para reducir el impacto ambiental.
+
+##Miembros del proyecto
+- Laura Valenntina Ladino Rivera  → [GitHub](https://github.com/githublauraa)
