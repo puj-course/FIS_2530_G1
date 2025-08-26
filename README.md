@@ -1,4 +1,5 @@
 # FIS\_2025\_G1
+<img width="257" height="251" alt="Captura de pantalla 2025-08-25 201256" src="https://github.com/user-attachments/assets/41cd260b-ea21-4761-9e93-9d8d2834ce11" />
 
 Proyecto en curso de la asignatura de Fundamentos de Ingeniería de Software
 
