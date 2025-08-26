@@ -16,6 +16,7 @@ El propósito es crear una aplicación interactiva que permita a los usuarios:
 *Objetivos*
 
 General
+
 Desarrollar una aplicacion interactiva que permita a los usuarios calcular su huella de carbono personal partiendo de sus habitos cotidianos. Teniendo como objetivo principal que las personas visualicen y comprendan su impacto ambiental, ofreciendo herramientas gamificadas y recomendaciones personalizadas para motivar a los usuarios a un cambio con una vida mas sostenible, contribuyendo a la conciencia ambiental, los objetibos de desarrollo (ODS) y el Laudato Si.
 
 Específicos
