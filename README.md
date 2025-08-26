@@ -26,6 +26,3 @@ Específicos
 * Implementar algoritmos que estimen la huella de carbono en unidades comprensibles.
 * Presentar resultados de forma visual y comparativa.
 * Brindar recomendaciones personalizadas para reducir el impacto ambiental.
-
-Miembros del grupo:
-- Laura Valentina Ladino Rivera  → [GitHub](https://github.com/githublauraa)
