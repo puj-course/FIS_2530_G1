@@ -14,7 +14,7 @@ El propósito es crear una aplicación interactiva que permita a los usuarios:
 * Recibir recomendaciones personalizadas para reducir su huella.
 * Hacer seguimiento a su progreso a lo largo del tiempo.
 
-*Objetivos*
+💡 *Objetivos*
 
 General
 
@@ -27,7 +27,7 @@ Específicos
 * Presentar resultados de forma visual y comparativa.
 * Brindar recomendaciones personalizadas para reducir el impacto ambiental.
 
-Usuarios:
+👥 *Usuarios:*
 - Dana Lizeth Trujillo Rivera → [GitHub](https://github.com/daliz-18)
 
 - Sebastian Alejandro Gaibor Gonzalez  → [GitHub](https://github.com/SebastianGaibor)
