@@ -28,4 +28,4 @@ Específicos
 * Brindar recomendaciones personalizadas para reducir el impacto ambiental.
 
 Miembros del grupo:
-- Laura Valentina Ladino Rivera  → [GitHub](https://github.com/githublauraa)
+- Laura Valentina Ladino Rivera → [GitHub](https://github.com/githublauraa)
