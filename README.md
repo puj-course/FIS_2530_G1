@@ -27,7 +27,9 @@ Específicos
 * Presentar resultados de forma visual y comparativa.
 * Brindar recomendaciones personalizadas para reducir el impacto ambiental.
 
+
 Miembros del grupo:
 - Laura Valentina Ladino Rivera → [GitHub](https://github.com/githublauraa)
 - Sebastian Alejandro Gaibor Gonazalez → [GitHub](https://github.com/SebastianGaibor)
 - Richard Arley Navas Peñaranda → [GitHub](https://github.com/richnav221)
+- Dana Lizeth Trujillo → [GitHub](https://github.com/daliz-18)
