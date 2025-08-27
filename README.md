@@ -26,5 +26,10 @@ Específicos
 * Implementar algoritmos que estimen la huella de carbono en unidades comprensibles.
 * Presentar resultados de forma visual y comparativa.
 * Brindar recomendaciones personalizadas para reducir el impacto ambiental.
+
+
+
+
+
 Dana Lizeth Trujillo https://github.com/daliz-18
 
