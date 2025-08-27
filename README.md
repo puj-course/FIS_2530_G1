@@ -27,6 +27,6 @@ Específicos
 * Presentar resultados de forma visual y comparativa.
 * Brindar recomendaciones personalizadas para reducir el impacto ambiental.
 
-
-
-- Sebastian Alejandro Gaibor Gonazalez  → [GitHub](https://github.com/SebastianGaibor)
+Miembros del grupo:
+- Laura Valentina Ladino Rivera → [GitHub](https://github.com/githublauraa)
+- Sebastian Alejandro Gaibor Gonazalez → [GitHub](https://github.com/SebastianGaibor)
