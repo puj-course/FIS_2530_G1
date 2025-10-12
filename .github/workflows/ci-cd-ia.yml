@@ -1,0 +1,50 @@
+name: CI-CD-IA
+
+on:
+  push:
+    branches:
+      - grupo1
+  pull_request:
+    branches:
+      - grupo1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Configurar JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Ejecutar pruebas con Maven
+        working-directory: scripts/mi-proyecto-spring
+        run: mvn -B test
+
+      - name: Construir proyecto
+        if: success()
+        working-directory: scripts/mi-proyecto-spring
+        run: mvn -B package
+
+      - name: Subir artefacto JAR
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mi-proyecto-spring-jar
+          path: scripts/mi-proyecto-spring/target/*.jar
+
+      - name: Sugerencias IA
+        run: |
+          echo "Sugerencia IA: usar 'develop' para pruebas internas y 'main' para releases. Proteger 'main' contra commits directos."
+
+      - name: Construir imagen Docker (sin subir)
+        if: success()
+        uses: docker/build-push-action@v6
+        with:
+          context: scripts/mi-proyecto-spring
+          push: false
