@@ -26,7 +26,7 @@ jobs:
         working-directory: scripts/mi-proyecto-spring
         run: mvn -B test
 
-      - name: Construir proyecto
+      - name: Construir proyecto con Maven
         if: success()
         working-directory: scripts/mi-proyecto-spring
         run: mvn -B package
@@ -44,3 +44,4 @@ jobs:
         with:
           context: scripts/mi-proyecto-spring
           push: false
+
