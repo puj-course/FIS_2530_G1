@@ -38,10 +38,6 @@ jobs:
           name: mi-proyecto-spring-jar
           path: scripts/mi-proyecto-spring/target/*.jar
 
-      - name: Sugerencias IA
-        run: |
-          echo "Sugerencia IA: usar 'develop' para pruebas internas y 'main' para releases. Proteger 'main' contra commits directos."
-
       - name: Construir imagen Docker (sin subir)
         if: success()
         uses: docker/build-push-action@v6
