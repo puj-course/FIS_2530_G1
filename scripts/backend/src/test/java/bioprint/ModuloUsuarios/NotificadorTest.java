@@ -13,7 +13,7 @@ public class NotificadorTest {
     @Test
     void testEnviarMensajeEjecutaExecuteCorrectamente() throws Exception {
         Notificador notificador = spy(new Notificador());
-        doReturn(null).when(notificador).execute(any(SendMessage.class)); // ✅ cambio aquí
+        doReturn(null).when(notificador).execute(any(SendMessage.class)); //  cambio aquí
 
         notificador.enviarMensaje("Hola Mundo");
 
@@ -23,7 +23,7 @@ public class NotificadorTest {
     @Test
     void testEnviarMensajeCreaElObjetoCorrectamente() throws Exception {
         Notificador notificador = spy(new Notificador());
-        doReturn(null).when(notificador).execute(any(SendMessage.class)); // ✅ cambio aquí
+        doReturn(null).when(notificador).execute(any(SendMessage.class)); //  cambio aquí
 
         notificador.enviarMensaje("Mensaje de prueba");
 
@@ -44,4 +44,5 @@ public class NotificadorTest {
 
         assertDoesNotThrow(() -> notificador.enviarMensaje("Prueba de error"));
     }
+
 }
