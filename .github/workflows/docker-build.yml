@@ -1,44 +1,44 @@
-name: Build and Verify Docker Backend
+name: Build and Verify Docker Compose Backend
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:  # Permite la ejecución manual desde la interfaz de GitHub Actions
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Clonación del repositorio
+      # 1️ Clonar el repositorio
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Configuración del entorno Java (JDK 17)
+      # 2️ Configurar entorno Java 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      # Compilación del proyecto Maven sin ejecución de pruebas
-      - name: Build with Maven
-        working-directory: scripts/backend
-        run: mvn clean package -DskipTests
-
-      # Configuración de Docker Buildx
+      # 3️ Configurar Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Construcción de la imagen Docker
-      - name: Build Docker image
-        working-directory: scripts/backend
-        run: docker build -t bioprint-backend .
-
-      # Verificación de la creación del contenedor
-      - name: Verify container creation
+      # 4️ Iniciar docker-compose (levanta los servicios)
+      - name: Build and start services with Docker Compose
         run: |
-          docker create --name bioprint-test bioprint-backend
-          docker rm bioprint-test
+          docker-compose -f scripts/backend/docker-compose.yml up -d --build
+
+      # 5️ Verificar que el contenedor está corriendo
+      - name: Verify container is running
+        run: |
+          docker ps
+          docker logs $(docker ps -q --filter "name=bioprint-backend")
+
+      # 6 Detener y limpiar los contenedores
+      - name: Stop and clean up
+        if: always()
+        run: docker-compose -f scripts/backend/docker-compose.yml down
