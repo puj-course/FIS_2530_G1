@@ -30,7 +30,7 @@ jobs:
       # 4️ Iniciar docker-compose (levanta los servicios)
       - name: Build and start services with Docker Compose
         run: |
-          docker-compose -f scripts/backend/docker-compose.yml up -d --build
+          docker compose -f scripts/backend/docker-compose.yml up -d --build
 
       # 5️ Verificar que el contenedor está corriendo
       - name: Verify container is running
@@ -41,4 +41,4 @@ jobs:
       # 6 Detener y limpiar los contenedores
       - name: Stop and clean up
         if: always()
-        run: docker-compose -f scripts/backend/docker-compose.yml down
+        run: docker compose -f scripts/backend/docker-compose.yml down
