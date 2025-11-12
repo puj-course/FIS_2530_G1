@@ -22,20 +22,20 @@ import javafx.stage.Stage;
 public class RegistroController {
 
     @FXML
-    private TextField txtNombre;
+    public TextField txtNombre;
 
     @FXML
-    private TextField txtEmail;
+    public TextField txtEmail;
 
     @FXML
-    private PasswordField txtContrasena;
+    public PasswordField txtContrasena;
 
     @FXML
-    private PasswordField txtConfirmarContrasena;
+    public PasswordField txtConfirmarContrasena;
 
 
     @FXML
-    private void registrarUsuario(ActionEvent event) {
+    public void registrarUsuario(ActionEvent event) {
         String nombre = txtNombre.getText().trim();
         String email = txtEmail.getText().trim();
         String contrasena = txtContrasena.getText();
@@ -72,7 +72,7 @@ public class RegistroController {
             mostrarAlerta("Error", "Hubo un problema al registrar el usuario.");
         }
     }
-   private boolean guardarUsuario(String nombre, String contrasena) {
+   public boolean guardarUsuario(String nombre, String contrasena) {
     try {
         URL url = new URL("http://localhost:8080/usuarios");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -98,18 +98,18 @@ public class RegistroController {
     }
 }
 
-    private boolean esEmailValido(String email) {
+    public boolean esEmailValido(String email) {
         String patronEmail = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         return Pattern.matches(patronEmail, email);
     }
 
-    private boolean esContrasenaSegura(String contrasena) {
+    public boolean esContrasenaSegura(String contrasena) {
         String patronContrasena = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{8,}$";
         return Pattern.matches(patronContrasena, contrasena);
     }
 
 
-    private void mostrarAlerta(String titulo, String mensaje) {
+    public void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
@@ -117,7 +117,7 @@ public class RegistroController {
         alert.showAndWait();
     }
 
-    private void limpiarCampos() {
+    public void limpiarCampos() {
         txtNombre.clear();
         txtEmail.clear();
         txtContrasena.clear();
@@ -125,7 +125,7 @@ public class RegistroController {
     }
 
     @FXML
-    private void onVolver(ActionEvent event) throws IOException {
+    public void onVolver(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
         Parent root = loader.load();
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
@@ -133,7 +133,7 @@ public class RegistroController {
         stage.show();
     }
  @FXML
-    private Circle imagenMascota;
+    public Circle imagenMascota;
 
     @FXML
     public void initialize() {
@@ -146,5 +146,3 @@ public class RegistroController {
         }
     }
 }
-
-

@@ -20,16 +20,16 @@ import javafx.stage.Stage;
 public class LoginController {
 
     @FXML
-    private TextField txtUsuario;
+    public TextField txtUsuario;
 
     @FXML
-    private PasswordField txtPassword;
+    public PasswordField txtPassword;
 
     @FXML
-    private Circle imagenCircular;
+    public Circle imagenCircular;
 
     @FXML
-    private void iniciarSesion(ActionEvent event) {
+    public void iniciarSesion(ActionEvent event) {
         System.out.println("Botón 'Iniciar sesión' presionado");
 
         HttpURLConnection con = null;
@@ -94,7 +94,7 @@ public class LoginController {
     }
 
     @FXML
-    private void onIrARegistro(ActionEvent event) {
+    public void onIrARegistro(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/InicioSesion/Registrarse.fxml"));
             Parent root = loader.load();
@@ -107,7 +107,7 @@ public class LoginController {
         }
     }
 
-    private void mostrarAlerta(String titulo, String mensaje) {
+    public void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);

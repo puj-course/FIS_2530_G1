@@ -1,30 +1,31 @@
 package bioprint.Frontend.mascota;
 
+import java.io.File;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import java.io.File;
 
 public class MascotaController {
 
     @FXML
-    private Label mensajeLabel;
+    public Label mensajeLabel;
 
     @FXML
-    private ImageView mascotaImg;
+    public ImageView mascotaImg;
 
-    private String nivelActual = "medio";
-    private int mensajeIndex = 0;
+    public String nivelActual = "medio";
+    public int mensajeIndex = 0;
 
-    private final String basePath = "scripts/backend/src/main/resources/references";
+    public final String basePath = "scripts/backend/src/main/resources/references";
 
     public void initialize() {
         mostrarMascota();
         mensajeLabel.setText("");
     }
 
-    private void mostrarMascota() {
+    public void mostrarMascota() {
 
         String fileName;
 
@@ -37,7 +38,7 @@ public class MascotaController {
     }
 
     @FXML
-    private void mostrarRecomendaciones() {
+    public void mostrarRecomendaciones() {
         String[] frases = Recomendacion.obtenerRecomendaciones(nivelActual);
         if (mensajeIndex < frases.length) {
             if (!mensajeLabel.getText().isEmpty())
