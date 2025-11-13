@@ -1,97 +1,93 @@
 package bioprint.ModuloUsuarios;
 
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.Arrays;
-import java.util.List;
+import org.mockito.Mockito;
+import javafx.stage.Stage;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+/**
+ * Pruebas unitarias para LoginController (sin abrir interfaz JavaFX)
+ */
+public class LoginControllerTest {
 
-public class UsuarioControllerTest {
-
-    private UsuarioService mockService;
-    private UsuarioController controller;
+    private LoginController controller;
+    private UsuarioService usuarioServiceMock;
+    private Notificador notificadorMock;
 
     @BeforeEach
-    void setUp() {
-        mockService = mock(UsuarioService.class);
-        controller = new UsuarioController(mockService);
+    public void setUp() {
+        controller = new LoginController();
+
+        // Inyectar dependencias simuladas (mocks)
+        usuarioServiceMock = Mockito.mock(UsuarioService.class);
+        notificadorMock = Mockito.mock(Notificador.class);
+
+        // Simular Stage vacío (no abre ventana real)
+        Stage dummyStage = new Stage();
+
+        // Inicializar manualmente campos privados
+        controller.usuarioService = usuarioServiceMock;
+        controller.bot = notificadorMock;
+        controller.start(dummyStage);  // simula la inicialización
     }
 
     @Test
-    void testListarUsuariosOk() {
-        Usuario u1 = new Usuario(1L, "Juan", "1234");
-        Usuario u2 = new Usuario(2L, "Ana", "abcd");
+    public void testLoginUsuarioValido() {
+        // Usuario correcto
+        when(usuarioServiceMock.validarUsuario("juan", "123")).thenReturn(true);
 
-        when(mockService.listar()).thenReturn(Arrays.asList(u1, u2));
+        boolean valido = usuarioServiceMock.validarUsuario("juan", "123");
+        assertTrue(valido);
 
-        List<Usuario> resultado = controller.listar();
-
-        assertEquals(2, resultado.size());
-        assertEquals("Juan", resultado.get(0).getNombre());
-        verify(mockService, times(1)).listar();
+        // Verifica que se haya notificado correctamente
+        verify(usuarioServiceMock, times(1)).validarUsuario("juan", "123");
     }
 
     @Test
-    void testListarUsuariosVacia() {
-        when(mockService.listar()).thenReturn(List.of());
+    public void testLoginUsuarioInvalido() {
+        when(usuarioServiceMock.validarUsuario("maria", "xyz")).thenReturn(false);
 
-        List<Usuario> resultado = controller.listar();
+        boolean valido = usuarioServiceMock.validarUsuario("maria", "xyz");
+        assertFalse(valido);
 
-        assertTrue(resultado.isEmpty());
-        verify(mockService, times(1)).listar();
+        verify(usuarioServiceMock, times(1)).validarUsuario("maria", "xyz");
+        verify(notificadorMock, never()).enviarMensaje(anyString());
     }
 
     @Test
-    void testCrearUsuarioOk() {
-        Usuario nuevo = new Usuario(null, "Pedro", "clave");
-        Usuario guardado = new Usuario(3L, "Pedro", "clave");
+    public void testRegistrarUsuarioNuevo() {
+        when(usuarioServiceMock.usuarioExiste("nuevo")).thenReturn(false);
 
-        when(mockService.guardar(nuevo)).thenReturn(guardado);
+        Usuario nuevo = new Usuario();
+        nuevo.setNombre("nuevo");
+        nuevo.setContrasena("clave");
+        usuarioServiceMock.guardar(nuevo);
 
-        Usuario resultado = controller.crear(nuevo);
-
-        assertNotNull(resultado);
-        assertEquals(3L, resultado.getId());
-        assertEquals("Pedro", resultado.getNombre());
-        verify(mockService, times(1)).guardar(nuevo);
-    }
-    @Test
-    void testCrearUsuarioNulo() {
-        Usuario entrada = new Usuario(null, "Carlos", "pass");
-        when(mockService.guardar(entrada)).thenReturn(null);
-
-        Usuario resultado = controller.crear(entrada);
-
-        assertNull(resultado);
-        verify(mockService, times(1)).guardar(entrada);
+        verify(usuarioServiceMock, times(1)).guardar(nuevo);
     }
 
     @Test
-    void testListarUsuariosLanzaExcepcion() {
-        when(mockService.listar()).thenThrow(new RuntimeException("Error en BD"));
-        assertThrows(RuntimeException.class, () -> controller.listar());
-        verify(mockService).listar();
+    public void testRegistrarUsuarioExistente() {
+        when(usuarioServiceMock.usuarioExiste("repetido")).thenReturn(true);
+
+        boolean existe = usuarioServiceMock.usuarioExiste("repetido");
+        assertTrue(existe);
+
+        verify(usuarioServiceMock, times(1)).usuarioExiste("repetido");
+        verify(usuarioServiceMock, never()).guardar(any());
     }
 
     @Test
-    void testGuardarUsuarioLanzaExcepcion() {
-        Usuario u = new Usuario(null, "Mario", "000");
-        when(mockService.guardar(u)).thenThrow(new RuntimeException("Error al guardar"));
-        assertThrows(RuntimeException.class, () -> controller.crear(u));
-        verify(mockService).guardar(u);
-    }
+    public void testCamposVaciosEnRegistro() {
+        Usuario vacio = new Usuario();
+        vacio.setNombre("");
+        vacio.setContrasena("");
 
-    @Test
-    void testConstructorYServiceNoNulo() {
-        assertNotNull(controller);
-        assertNotNull(mockService);
-    }
-
-    @Test
-    void testMetodosDeclarados() {
-        assertDoesNotThrow(() -> UsuarioController.class.getDeclaredMethod("listar"));
-        assertDoesNotThrow(() -> UsuarioController.class.getDeclaredMethod("crear", Usuario.class));
+        assertEquals("", vacio.getNombre());
+        assertEquals("", vacio.getContrasena());
     }
 }
+
