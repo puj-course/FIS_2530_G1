@@ -56,4 +56,86 @@ public class FormularioTest {
     void testDoubleIgualAlMaximo() {
         assertTrue(Formulario.validar(10.0, 10.0, 1.0, false));
     }
+
+    
+    // --- TESTS NUEVOS PARA AUMENTAR COBERTURA ---
+
+    @Test
+    void testEnteroFueraDelRangoImprimeMensajeSinOpciones() {
+        ByteArrayOutputStream salida = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(salida));
+
+        boolean resultado = Formulario.validar(20, 10, 1, false);
+
+        System.setOut(System.out); // restaurar salida estándar
+        assertFalse(resultado);
+        assertTrue(salida.toString().contains("Por favor ingresar un número entre"));
+    }
+
+    @Test
+    void testEnteroFueraDelRangoImprimeMensajeConOpciones() {
+        ByteArrayOutputStream salida = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(salida));
+
+        boolean resultado = Formulario.validar(0, 10, 1, true);
+
+        System.setOut(System.out);
+        assertFalse(resultado);
+        assertTrue(salida.toString().contains("Por favor elegir entre las opciones dadas"));
+    }
+
+    @Test
+    void testDoubleFueraDelRangoImprimeMensajeSinOpciones() {
+        ByteArrayOutputStream salida = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(salida));
+
+        boolean resultado = Formulario.validar(12.5, 10.0, 1.0, false);
+
+        System.setOut(System.out);
+        assertFalse(resultado);
+        assertTrue(salida.toString().contains("Por favor ingresar un número entre"));
+    }
+
+    @Test
+    void testDoubleFueraDelRangoImprimeMensajeConOpciones() {
+        ByteArrayOutputStream salida = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(salida));
+
+        boolean resultado = Formulario.validar(-5.0, 10.0, 1.0, true);
+
+        System.setOut(System.out);
+        assertFalse(resultado);
+        assertTrue(salida.toString().contains("Por favor elegir entre las opciones dadas"));
+    }
+
+    @Test
+    void testFormularioConInputInvalido() {
+        // Simula una entrada no numérica que cause InputMismatchException
+        String entradaSimulada = "texto\n";
+        System.setIn(new ByteArrayInputStream(entradaSimulada.getBytes()));
+
+        ByteArrayOutputStream salida = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(salida));
+
+        double resultado = Formulario.formulario();
+
+        System.setIn(System.in);
+        System.setOut(System.out);
+
+        assertEquals(-1, resultado);
+        assertTrue(salida.toString().contains("Entrada inválida"));
+    }
+
+    @Test
+    void testValidarLimiteInferiorNegativo() {
+        // Cubre rama con valores negativos
+        assertFalse(Formulario.validar(-5, 10, 0, false));
+    }
+
+    @Test
+    void testValidarDoubleMuyGrande() {
+        // Cubre validación con double fuera del rango superior
+        assertFalse(Formulario.validar(9999.9, 500.0, 0.0, false));
+    }
 }
+
