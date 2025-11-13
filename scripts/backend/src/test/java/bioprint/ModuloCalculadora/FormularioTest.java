@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.PrintStream;
 import java.io.ByteArrayOutputStream;
-
+import java.io.ByteArrayInputStream;
 
 public class FormularioTest {
 
@@ -141,6 +141,7 @@ public class FormularioTest {
         assertFalse(Formulario.validar(9999.9, 500.0, 0.0, false));
     }
 }
+
 
 
 
