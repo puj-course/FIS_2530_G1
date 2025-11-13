@@ -105,7 +105,7 @@ public class NotificadorTest {
         verify(notificador, never()).execute(any(SendMessage.class));
     }
 
-    //  Nuevo test: onUpdateReceived sin mensaje de texto
+    //  Nuevo test: onUpdateReceived sin mensaje de texto 
     @Test
     void testOnUpdateReceivedSinTexto() {
         Notificador notificador = new Notificador();
@@ -117,3 +117,4 @@ public class NotificadorTest {
         assertDoesNotThrow(() -> notificador.onUpdateReceived(update));
     }
 }
+
