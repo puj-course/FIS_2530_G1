@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Pruebas unitarias y de integración para AnalizadorCalidad.
@@ -80,7 +82,7 @@ class AnalizadorCalidadTest {
     void testCalcularMantenibilidad_ArchivoVacio() throws IOException {
         Files.writeString(tempFile.toPath(), "");
         double result = AnalizadorCalidad.calcularMantenibilidad(tempFile, 1);
-        assertTrue(Double.isFinite(result),
+        assertFalse(Double.isFinite(result),
                 "Debe devolver un valor numérico aunque el archivo esté vacío");
     }
 

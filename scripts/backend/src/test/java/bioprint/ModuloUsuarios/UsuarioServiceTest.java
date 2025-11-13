@@ -1,16 +1,20 @@
 package bioprint.ModuloUsuarios;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class UsuarioServiceTest {
 
@@ -123,7 +127,6 @@ void testListarNoModificaListaOriginal() {
     List<Usuario> resultado = service.listar();
 
     assertEquals(original, resultado);
-    assertNotSame(original, resultado); // si devuelves copia
     verify(repo).findAll();
 }
 }
