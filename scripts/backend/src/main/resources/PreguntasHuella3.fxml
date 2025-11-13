@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="405.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bioprint.Frontend.menu.AguaController">
+
+   <children>
+      <ImageView fitHeight="425.0" fitWidth="613.0" layoutX="-2.0" layoutY="-7.0" mouseTransparent="true" preserveRatio="true">
+         <image>
+            <Image url="@references/fondo.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" />
+
+      <Pane layoutX="147.0" layoutY="24.0" prefHeight="359.0" prefWidth="410.0" style="-fx-background-color: black;">
+         <children>
+
+            <Label layoutX="162.0" text="Agua" textFill="WHITE">
+               <font>
+                  <Font name="Yu Gothic UI Semilight" size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="25.0" layoutY="60.0" text="Número de duchas al día (por persona)" textFill="WHITE">
+               <font>
+                  <Font name="Yu Gothic UI Semilight" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="24.0" layoutY="234.0" text="¿Tienes dispositivos ahorradores de agua?" textFill="WHITE">
+               <font>
+                  <Font name="Yu Gothic UI Semilight" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="134.0" prefHeight="56.0" prefWidth="311.0" text="Duración promedio de cada ducha &#10;(minutos):" textFill="WHITE">
+               <font>
+                  <Font name="Yu Gothic UI Semilight" size="19.0" />
+               </font>
+            </Label>
+
+            <ChoiceBox fx:id="duchasPorDiaChoice" layoutX="24.0" layoutY="96.0" prefHeight="25.0" prefWidth="346.0" style="-fx-background-color: white;" />
+
+            <ChoiceBox fx:id="ahorradoresChoice" layoutX="25.0" layoutY="274.0" prefHeight="25.0" prefWidth="343.0" style="-fx-background-color: white;" />
+            <Button fx:id="volverBtn" layoutX="26.0" layoutY="320.0" mnemonicParsing="false" onAction="#onVolver" style="-fx-background-color: #4ED7F1;" text="Volver" />
+
+            <Button fx:id="siguienteBtn" layoutX="311.0" layoutY="320.0" mnemonicParsing="false" onAction="#onSiguiente" style="-fx-background-color: #4ED7F1;" text="Siguiente" />
+            <TextField fx:id="duracionDuchaField" layoutX="24.0" layoutY="197.0" prefHeight="25.0" prefWidth="346.0" promptText="Ejemplo: 10" />
+
+         </children>
+      </Pane>
+
+      <Circle fx:id="imagenCircular" fill="DODGERBLUE" layoutX="73.0" layoutY="66.0" radius="42.0" stroke="BLACK" strokeType="INSIDE" />
+      <Pane layoutX="-2.0" layoutY="94.0" prefHeight="84.0" prefWidth="150.0" style="-fx-background-color: #4ED7F1; -fx-background-radius: 19;">
+         <children>
+            <Label fx:id="mensajeLabel" layoutX="22.0" prefHeight="84.0" prefWidth="114.0" style="-fx-font-size: 15px; -fx-text-fill: #1A4D2E;" text="¿Que tal te fue&#10; en el consumo &#10;de agua?" textAlignment="CENTER" wrapText="true" />
+         </children>
+      </Pane>
+
+   </children>
+</AnchorPane>

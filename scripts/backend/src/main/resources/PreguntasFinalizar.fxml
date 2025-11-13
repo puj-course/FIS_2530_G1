@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+
+<AnchorPane prefHeight="405.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bioprint.Frontend.InicioSesion.LoginController">
+
+   <children>
+      <ImageView fitHeight="425.0" fitWidth="613.0" layoutX="-2.0" layoutY="-7.0" mouseTransparent="true" preserveRatio="true">
+         <image>
+            <Image url="/references/fondo.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" />
+      <Pane layoutX="66.0" layoutY="22.0" prefHeight="366.0" prefWidth="478.0" style="-fx-background-color: Black;">
+         <children>
+      
+            <Circle fx:id="imagenCircular" fill="DODGERBLUE" layoutX="239.0" layoutY="149.0" radius="119.0" stroke="BLACK" strokeType="INSIDE" />
+            <Pane layoutX="84.0" layoutY="241.0" prefHeight="74.0" prefWidth="310.0" style="-fx-background-color: #4ED7F1; -fx-background-radius: 19;">
+               <children>
+                  <Label fx:id="mensajeLabel" layoutX="21.0" prefHeight="74.0" prefWidth="286.0" style="-fx-font-size: 15px; -fx-text-fill: #1A4D2E;" text="Felicidades!!!&#10;has terminado¿Quieres ver tus rultados?" textAlignment="CENTER" wrapText="true" />
+               </children>
+            </Pane>
+            <Button layoutX="37.0" layoutY="327.0" mnemonicParsing="false" text="Menu" />
+            <Button layoutX="381.0" layoutY="327.0" mnemonicParsing="false" text="Resultados" />
+         </children>
+      </Pane>
+
+   </children>
+</AnchorPane>

@@ -11,12 +11,12 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="405.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InicioSesion.LoginController">
+<AnchorPane prefHeight="405.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bioprint.Frontend.InicioSesion.LoginController">
 
    <children>
       <ImageView fitHeight="425.0" fitWidth="613.0" layoutX="-2.0" layoutY="-7.0" mouseTransparent="true" preserveRatio="true">
          <image>
-            <Image url="@../references/fondo.jpg" />
+            <Image url="@references/fondo.jpg" />
          </image>
       </ImageView>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" />
@@ -43,10 +43,7 @@
          </children>
       </Pane>
 
-      <!-- 🔹 Imagen circular (avatar) -->
       <Circle fx:id="imagenCircular" fill="DODGERBLUE" layoutX="152.0" layoutY="204.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-
-      <!-- 🔹 Panel inferior con mensaje -->
       <Pane layoutX="25.0" layoutY="283.0" prefHeight="42.0" prefWidth="254.0" style="-fx-background-color: #4ED7F1; -fx-background-radius: 19;">
          <children>
             <Label fx:id="mensajeLabel" layoutX="7.0" layoutY="11.0" prefWidth="400.0" style="-fx-font-size: 15px; -fx-text-fill: #1A4D2E;" text="Hola, ¿estas listo para inciar sesión?" wrapText="true" />

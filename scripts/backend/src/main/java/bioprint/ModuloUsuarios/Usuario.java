@@ -20,4 +20,12 @@ public class Usuario {
     private String contrasena;
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     //private Long id;
+
+    void setNombre(String string) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    void setContrasena(String contrasena) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

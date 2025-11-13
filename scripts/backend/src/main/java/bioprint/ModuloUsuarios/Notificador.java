@@ -29,7 +29,7 @@ public class Notificador extends TelegramLongPollingBot {
 
                 try {
                     execute(reply);
-                    System.out.println("✅ Respondí a " + chatId + ": " + mensaje);
+                    System.out.println("Respondí a " + chatId + ": " + mensaje);
                 } catch (TelegramApiException e) {
                     e.printStackTrace();
                 }

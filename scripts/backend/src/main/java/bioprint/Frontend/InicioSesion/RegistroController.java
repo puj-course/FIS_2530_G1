@@ -6,6 +6,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Component;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-
+@Component
 public class RegistroController {
 
     @FXML
@@ -126,7 +128,7 @@ public class RegistroController {
 
     @FXML
     private void onVolver(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
         Parent root = loader.load();
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));

@@ -9,42 +9,77 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="405.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InicioSesion.LoginController">
+<AnchorPane prefHeight="405.0" prefWidth="602.0"
+    xmlns="http://javafx.com/javafx/23.0.1"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="bioprint.Frontend.menu.menuControler">
 
    <children>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="425.0" fitWidth="613.0" layoutX="-2.0" layoutY="-7.0" preserveRatio="true">
          <image>
-            <Image url="@../references/fondo.jpg" />
+            <Image url="@references/fondo.jpg" />
          </image>
       </ImageView>
 
       <Circle fx:id="imagenCircular" fill="DODGERBLUE" layoutX="305.0" layoutY="214.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
 
-      <Pane layoutX="178.0" layoutY="293.0" prefHeight="42.0" prefWidth="254.0" style="-fx-background-color: #4ED7F1; -fx-background-radius: 19;">
+      <Pane layoutX="178.0" layoutY="293.0" prefHeight="42.0" prefWidth="254.0"
+            style="-fx-background-color: #4ED7F1; -fx-background-radius: 19;">
          <children>
-            <Label fx:id="mensajeLabel" layoutX="40.0" layoutY="11.0" prefWidth="400.0" style="-fx-font-size: 15px; -fx-text-fill: #1A4D2E;" text="¿Que vamos a hacer hoy?" wrapText="true" />
+            <Label fx:id="mensajeLabel" layoutX="40.0" layoutY="11.0" prefWidth="400.0"
+                   style="-fx-font-size: 15px; -fx-text-fill: #1A4D2E;"
+                   text="¿Que vamos a hacer hoy?" wrapText="true" />
          </children>
       </Pane>
-      <Button layoutX="31.0" layoutY="70.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="166.0" style="-fx-background-color: black;" text="Cualcular Huella&#10; de carbono" textAlignment="CENTER" textFill="WHITE">
+
+      <Button layoutX="31.0" layoutY="70.0" mnemonicParsing="false"
+              prefHeight="71.0" prefWidth="166.0"
+              style="-fx-background-color: black;"
+              text="Calcular Huella&#10;de carbono"
+              textAlignment="CENTER" textFill="WHITE"
+              onAction="#onIrAHuella">
          <font>
             <Font name="Yu Gothic UI Semilight" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="419.0" layoutY="70.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="165.0" style="-fx-background-color: black;" text="Recomendaciones&#10; de mascota" textAlignment="CENTER" textFill="WHITE">
+
+      <Button layoutX="419.0" layoutY="70.0" mnemonicParsing="false"
+              prefHeight="71.0" prefWidth="165.0"
+              style="-fx-background-color: black;"
+              text="Recomendacion&#10;de la mascota"
+              textAlignment="CENTER" textFill="WHITE"
+              onAction="#onIrAMascota">
          <font>
             <Font name="Yu Gothic UI Semilight" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="418.0" layoutY="210.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="166.0" style="-fx-background-color: black;" text="Analisis de datos" textFill="WHITE">
+
+      <Button layoutX="418.0" layoutY="210.0" mnemonicParsing="false"
+              prefHeight="71.0" prefWidth="166.0"
+              style="-fx-background-color: black;"
+              text="Analisis de datos" textFill="WHITE">
          <font>
             <Font name="Yu Gothic UI Semilight" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="31.0" layoutY="210.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="165.0" style="-fx-background-color: black;" text="ranking" textFill="WHITE">
+
+      <Button layoutX="31.0" layoutY="210.0" mnemonicParsing="false"
+              prefHeight="71.0" prefWidth="165.0"
+              style="-fx-background-color: black;" text="Ranking" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
+
+      <Button fx:id="btnExit" layoutX="250.0" layoutY="360.0" mnemonicParsing="false"
+              prefHeight="30.0" prefWidth="100.0"
+              style="-fx-background-color: #000000ff; -fx-background-radius: 10; -fx-text-fill: white;"
+              text="Salir" onAction="#onExit">
+         <font>
+            <Font name="Yu Gothic UI Semilight" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
+

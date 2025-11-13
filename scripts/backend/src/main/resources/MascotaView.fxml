@@ -6,28 +6,31 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
 
-<AnchorPane prefHeight="405" prefWidth="602" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mascota.MascotaController">
+<AnchorPane prefHeight="405" prefWidth="602" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bioprint.Frontend.menu.mascota.MascotaController">
 
     <children>
       <ImageView fitHeight="420.0" fitWidth="619.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../references/fondo.jpg" />
+            <Image url="@references/fondo.jpg" />
          </image>
       </ImageView>
 
-        <Pane layoutX="70.0" layoutY="52.0" prefHeight="314" prefWidth="469" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15;">
+        <Pane layoutX="73.0" layoutY="52.0" prefHeight="349.0" prefWidth="470.0" style="-fx-background-color: Black; -fx-background-radius: 15;">
             <children>
 
                 <ImageView fx:id="mascotaImg" fitHeight="180" fitWidth="190" layoutX="140.0" layoutY="112.0" preserveRatio="true" />
-            <Pane layoutX="37.0" layoutY="31.0" prefHeight="81.0" prefWidth="396.0" style="-fx-background-color: #4ED7F1; -fx-background-radius: 19;">
+            <Pane layoutX="37.0" layoutY="23.0" prefHeight="81.0" prefWidth="396.0" style="-fx-background-color: #4ED7F1; -fx-background-radius: 19;">
                <children>
       
                       <Label fx:id="mensajeLabel" layoutX="14.0" layoutY="4.0" prefWidth="400.0" style="-fx-font-size: 15px; -fx-text-fill: #1A4D2E;" wrapText="true" />
                </children>
             </Pane>
 
-                <Button fx:id="botonRecomendacion" layoutX="175.0" layoutY="275.0" onAction="#mostrarRecomendaciones" style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:10;" text="Ver recomendación" />
+                <Button fx:id="botonRecomendacion" layoutX="175.0" layoutY="280.0" onAction="#mostrarRecomendaciones" style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:10;" text="Ver recomendación" />
+            <Circle fx:id="imagenCircular" fill="DODGERBLUE" layoutX="235.0" layoutY="194.0" radius="82.0" stroke="BLACK" strokeType="INSIDE" />
+            <Button fx:id="botonRecomendacion1" layoutX="212.0" layoutY="311.0" onAction="#mostrarRecomendaciones" style="-fx-background-color:#4CAF50; -fx-text-fill:white; -fx-background-radius:10;" text="menu" />
 
             </children>
         </Pane>

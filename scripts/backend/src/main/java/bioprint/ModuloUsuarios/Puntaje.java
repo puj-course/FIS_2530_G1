@@ -21,4 +21,16 @@ public class Puntaje {
     @ManyToOne
     @JoinColumn(name = "usuario_nombre", referencedColumnName = "nombre")
     private Usuario usuario;
+
+    void setUsuario(Usuario usuario) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    void setValor(double valor) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    void setFecha(LocalDate now) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

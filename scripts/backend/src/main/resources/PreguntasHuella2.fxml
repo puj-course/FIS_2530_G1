@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="405.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bioprint.Frontend.menu.ElectricidadController">
+
+   <children>
+      <ImageView fitHeight="425.0" fitWidth="613.0" layoutX="-2.0" layoutY="-7.0" mouseTransparent="true" preserveRatio="true">
+         <image>
+            <Image url="@references/fondo.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" />
+
+            <Pane layoutX="136.0" layoutY="22.0" prefHeight="359.0" prefWidth="410.0" style="-fx-background-color: black;">
+         <children>
+
+                  <Label layoutX="117.0" text="Electricidad" textFill="WHITE">
+               <font>
+                  <Font name="Yu Gothic UI Semilight" size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="32.0" layoutY="63.0" text="Fuente de energía principal:" textFill="WHITE">
+               <font>
+                  <Font name="Yu Gothic UI Semilight" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="32.0" layoutY="217.0" text="¿Dejas aparatos enchufados cuando no &#10;los usas?" textFill="WHITE">
+               <font>
+                  <Font name="Yu Gothic UI Semilight" size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="140.0" text="¿Usas bombillos LED o ahorradores?" textFill="WHITE">
+               <font>
+                  <Font name="Yu Gothic UI Semilight" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="volverBtn" layoutX="26.0" layoutY="320.0" mnemonicParsing="false" onAction="#volverMenuAnterior" style="-fx-background-color: #4ED7F1;" text="Volver" />
+
+                  <Button fx:id="siguienteBtn" layoutX="311.0" layoutY="320.0" mnemonicParsing="false" onAction="#irASiguiente" style="-fx-background-color: #4ED7F1;" text="Siguiente" />
+<ChoiceBox fx:id="fuenteEnergiaChoice" layoutX="30.0" layoutY="101.0" prefHeight="25.0" prefWidth="346.0" style="-fx-background-color: white;" />
+
+      <ChoiceBox fx:id="bombillosChoice" layoutX="30.0" layoutY="180.0" prefHeight="25.0" prefWidth="346.0" style="-fx-background-color: white;" />
+
+      <ChoiceBox fx:id="aparatosChoice" layoutX="32.0" layoutY="277.0" prefHeight="25.0" prefWidth="343.0" style="-fx-background-color: white;" />
+
+               </children>
+      </Pane>
+
+      <Circle fx:id="imagenCircular" fill="DODGERBLUE" layoutX="67.0" layoutY="64.0" radius="42.0" stroke="BLACK" strokeType="INSIDE" />
+      <Pane layoutX="-2.0" layoutY="94.0" prefHeight="84.0" prefWidth="138.0" style="-fx-background-color: #4ED7F1; -fx-background-radius: 19;">
+         <children>
+            <Label fx:id="mensajeLabel" layoutX="14.0" prefHeight="84.0" prefWidth="112.0" style="-fx-font-size: 15px; -fx-text-fill: #1A4D2E;" text="¿Que tal te fue&#10; en el consumo &#10;de electricidad?" wrapText="true" />
+         </children>
+      </Pane>
+
+   </children>
+</AnchorPane>

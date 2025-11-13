@@ -19,4 +19,9 @@ public class GrupoFuentes implements FuenteHuella {
     public double calcularCO2() {
         return fuentes.stream().mapToDouble(FuenteHuella::calcularCO2).sum();
     }
+
+   public void limpiar() {
+    fuentes.clear();
+}
+
 }

@@ -11,13 +11,13 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="405.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="InicioSesion.RegistroController">
+<AnchorPane prefHeight="405.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bioprint.Frontend.InicioSesion.RegistroController">
 
     <children>
         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true" />
         <ImageView fitHeight="425.0" fitWidth="613.0" layoutX="-2.0" layoutY="-7.0" preserveRatio="true">
             <image>
-                <Image url="@../references/fondo.jpg" />
+                <Image url="@references/fondo.jpg" />
             </image>
         </ImageView>
       <Circle fx:id="imagenMascota" fill="DODGERBLUE" layoutX="152.0" layoutY="188.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
