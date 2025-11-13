@@ -41,9 +41,10 @@ public class LoginControllerTest {
         }
 
         @Override
-        public void guardar(Usuario u) {
+        public Usuario guardar(Usuario u) {
             usuarios.removeIf(x -> x.getNombre().equals(u.getNombre()));
             usuarios.add(u);
+            return u; 
         }
 
         public List<Usuario> getUsuarios() {
@@ -122,9 +123,4 @@ public class LoginControllerTest {
     }
 }
 
-
-
-
-
-
-
+      
