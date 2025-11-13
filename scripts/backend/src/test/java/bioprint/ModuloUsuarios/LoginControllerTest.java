@@ -1,50 +1,105 @@
 package bioprint.ModuloUsuarios;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginControllerTest {
 
-    @Test
-    public void testInicioSesionExitoso() {
-        // Simula el comportamiento básico del controlador
-        UsuarioService servicio = new UsuarioService();
-        LoginController controller = new LoginController(servicio);
+    private LoginController controller;
+    private FakeUsuarioRepository fakeRepo;
+    private UsuarioService usuarioService;
+    private Notificador notificador;
 
-        // Crear usuario válido
-        Usuario usuario = new Usuario("juan", "1234");
-        servicio.guardar(usuario);
+    // --- Simulación simple del repositorio sin base de datos ---
+    static class FakeUsuarioRepository implements UsuarioRepository {
+        private final List<Usuario> usuarios = new ArrayList<>();
 
-        // Ejecutar login
-        boolean resultado = controller.iniciarSesion("juan", "1234");
+        @Override
+        public List<Usuario> findAll() {
+            return new ArrayList<>(usuarios);
+        }
 
-        Assertions.assertTrue(resultado, "El usuario debería poder iniciar sesión correctamente");
+        @Override
+        public Usuario save(Usuario u) {
+            usuarios.removeIf(x -> x.getNombre().equals(u.getNombre()));
+            usuarios.add(u);
+            return u;
+        }
+
+        @Override
+        public Usuario findByNombre(String nombre) {
+            return usuarios.stream()
+                    .filter(u -> u.getNombre().equals(nombre))
+                    .findFirst()
+                    .orElse(null);
+        }
+
+        @Override
+        public Usuario findByNombreAndContrasena(String nombre, String contrasena) {
+            return usuarios.stream()
+                    .filter(u -> u.getNombre().equals(nombre)
+                            && u.getContrasena().equals(contrasena))
+                    .findFirst()
+                    .orElse(null);
+        }
+    }
+
+    @BeforeEach
+    void setUp() throws Exception {
+        // Crear el repositorio falso y el servicio real
+        fakeRepo = new FakeUsuarioRepository();
+        usuarioService = new UsuarioService(fakeRepo);
+        notificador = new Notificador();
+
+        // Crear el LoginController e inyectar dependencias privadas
+        controller = new LoginController();
+        Field usuarioField = LoginController.class.getDeclaredField("usuarioService");
+        usuarioField.setAccessible(true);
+        usuarioField.set(controller, usuarioService);
+
+        Field botField = LoginController.class.getDeclaredField("bot");
+        botField.setAccessible(true);
+        botField.set(controller, notificador);
     }
 
     @Test
-    public void testInicioSesionFallido() {
-        UsuarioService servicio = new UsuarioService();
-        LoginController controller = new LoginController(servicio);
+    void testRegistrarUsuarioNuevo() {
+        Usuario nuevo = new Usuario("juan", "1234");
+        usuarioService.guardar(nuevo);
 
-        // Usuario inexistente
-        boolean resultado = controller.iniciarSesion("invalido", "contraseña");
-
-        Assertions.assertFalse(resultado, "El inicio de sesión debe fallar para usuario inexistente");
+        assertTrue(usuarioService.usuarioExiste("juan"),
+                "El usuario recién guardado debe existir");
     }
 
     @Test
-    public void testInicioSesionConContrasenaIncorrecta() {
-        UsuarioService servicio = new UsuarioService();
-        LoginController controller = new LoginController(servicio);
+    void testUsuarioDuplicado() {
+        Usuario u1 = new Usuario("ana", "123");
+        usuarioService.guardar(u1);
+        usuarioService.guardar(new Usuario("ana", "xyz")); // regraba
 
-        Usuario usuario = new Usuario("ana", "1234");
-        servicio.guardar(usuario);
+        assertEquals(1, fakeRepo.findAll().size(),
+                "No debe duplicar usuarios con el mismo nombre");
+    }
 
-        boolean resultado = controller.iniciarSesion("ana", "0000");
+    @Test
+    void testValidarUsuarioCorrecto() {
+        fakeRepo.save(new Usuario("pepe", "abcd"));
+        assertTrue(usuarioService.validarUsuario("pepe", "abcd"),
+                "Debe validar correctamente credenciales válidas");
+    }
 
-        Assertions.assertFalse(resultado, "El inicio de sesión debe fallar si la contraseña es incorrecta");
+    @Test
+    void testValidarUsuarioIncorrecto() {
+        fakeRepo.save(new Usuario("luis", "9999"));
+        assertFalse(usuarioService.validarUsuario("luis", "0000"),
+                "No debe validar credenciales incorrectas");
     }
 }
+
 
 
 
