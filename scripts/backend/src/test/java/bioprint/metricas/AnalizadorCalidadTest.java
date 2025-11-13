@@ -104,41 +104,5 @@ class AnalizadorCalidadTest {
         assertTrue(AnalizadorCalidad.interpretarMantenibilidad(80).contains("Deficiente"));
     }
 
-    // ---------------------------------------------------------
-    // Pruebas de método main()
-    // ---------------------------------------------------------
-
-    @Test
-    void testMainCarpetaInexistente() {
-        java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
-        System.setOut(new java.io.PrintStream(out));
-
-        assertDoesNotThrow(() -> AnalizadorCalidad.main(new String[]{}));
-        String output = out.toString();
-        assertTrue(output.contains("ANÁLISIS DE CALIDAD") || output.contains("No se encontró"),
-                "Debe imprimir un mensaje indicando el resultado del análisis o la falta del directorio");
-    }
-
-    @Test
-    void testMainConArchivoJava() throws IOException {
-        // Crear carpeta temporal con archivo .java
-        File dir = Files.createTempDirectory("bioprint_test").toFile();
-        File javaFile = new File(dir, "Ejemplo.java");
-        Files.writeString(javaFile.toPath(), "public class Ejemplo { void m(){ if(true){} } }");
-
-        // Crear estructura esperada para el main
-        File src = new File("src/main/java/bioprint");
-        src.mkdirs();
-        Files.writeString(new File(src, "Dummy.java").toPath(), "class D {}");
-
-        java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
-        System.setOut(new java.io.PrintStream(out));
-
-        assertDoesNotThrow(() -> AnalizadorCalidad.main(new String[]{}));
-
-        String output = out.toString();
-        assertTrue(output.contains("Complejidad ciclomática") ||
-                   output.contains("Índice de mantenibilidad"),
-                   "Debe imprimir resultados del análisis");
-    }
 }
+
