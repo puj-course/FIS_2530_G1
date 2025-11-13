@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginControllerTest {
@@ -15,22 +16,19 @@ public class LoginControllerTest {
     private Notificador notificador;
 
     // --- Simulación simple del repositorio sin base de datos ---
-    static class FakeUsuarioRepository implements UsuarioRepository {
+    static class FakeUsuarioRepository {
         private final List<Usuario> usuarios = new ArrayList<>();
 
-        @Override
         public List<Usuario> findAll() {
             return new ArrayList<>(usuarios);
         }
 
-        @Override
         public Usuario save(Usuario u) {
             usuarios.removeIf(x -> x.getNombre().equals(u.getNombre()));
             usuarios.add(u);
             return u;
         }
 
-        @Override
         public Usuario findByNombre(String nombre) {
             return usuarios.stream()
                     .filter(u -> u.getNombre().equals(nombre))
@@ -38,7 +36,6 @@ public class LoginControllerTest {
                     .orElse(null);
         }
 
-        @Override
         public Usuario findByNombreAndContrasena(String nombre, String contrasena) {
             return usuarios.stream()
                     .filter(u -> u.getNombre().equals(nombre)
@@ -50,13 +47,13 @@ public class LoginControllerTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        // Crear el repositorio falso y el servicio real
         fakeRepo = new FakeUsuarioRepository();
         usuarioService = new UsuarioService(fakeRepo);
         notificador = new Notificador();
 
-        // Crear el LoginController e inyectar dependencias privadas
         controller = new LoginController();
+
+        // Inyección manual de dependencias privadas
         Field usuarioField = LoginController.class.getDeclaredField("usuarioService");
         usuarioField.setAccessible(true);
         usuarioField.set(controller, usuarioService);
@@ -99,6 +96,7 @@ public class LoginControllerTest {
                 "No debe validar credenciales incorrectas");
     }
 }
+
 
 
 
