@@ -2,6 +2,7 @@ package bioprint.ModuloCalculadora;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.PrintStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
@@ -60,17 +61,17 @@ public class FormularioTest {
         assertTrue(Formulario.validar(10.0, 10.0, 1.0, false));
     }
 
-    
     // --- TESTS NUEVOS PARA AUMENTAR COBERTURA ---
 
     @Test
     void testEnteroFueraDelRangoImprimeMensajeSinOpciones() {
         ByteArrayOutputStream salida = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
         System.setOut(new PrintStream(salida));
 
         boolean resultado = Formulario.validar(20, 10, 1, false);
 
-        System.setOut(System.out); // restaurar salida estándar
+        System.setOut(originalOut); // restaurar salida estándar
         assertFalse(resultado);
         assertTrue(salida.toString().contains("Por favor ingresar un número entre"));
     }
@@ -78,11 +79,12 @@ public class FormularioTest {
     @Test
     void testEnteroFueraDelRangoImprimeMensajeConOpciones() {
         ByteArrayOutputStream salida = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
         System.setOut(new PrintStream(salida));
 
         boolean resultado = Formulario.validar(0, 10, 1, true);
 
-        System.setOut(System.out);
+        System.setOut(originalOut);
         assertFalse(resultado);
         assertTrue(salida.toString().contains("Por favor elegir entre las opciones dadas"));
     }
@@ -90,11 +92,12 @@ public class FormularioTest {
     @Test
     void testDoubleFueraDelRangoImprimeMensajeSinOpciones() {
         ByteArrayOutputStream salida = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
         System.setOut(new PrintStream(salida));
 
         boolean resultado = Formulario.validar(12.5, 10.0, 1.0, false);
 
-        System.setOut(System.out);
+        System.setOut(originalOut);
         assertFalse(resultado);
         assertTrue(salida.toString().contains("Por favor ingresar un número entre"));
     }
@@ -102,11 +105,12 @@ public class FormularioTest {
     @Test
     void testDoubleFueraDelRangoImprimeMensajeConOpciones() {
         ByteArrayOutputStream salida = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
         System.setOut(new PrintStream(salida));
 
         boolean resultado = Formulario.validar(-5.0, 10.0, 1.0, true);
 
-        System.setOut(System.out);
+        System.setOut(originalOut);
         assertFalse(resultado);
         assertTrue(salida.toString().contains("Por favor elegir entre las opciones dadas"));
     }
@@ -115,15 +119,17 @@ public class FormularioTest {
     void testFormularioConInputInvalido() {
         // Simula una entrada no numérica que cause InputMismatchException
         String entradaSimulada = "texto\n";
-        System.setIn(new ByteArrayInputStream(entradaSimulada.getBytes()));
+        ByteArrayInputStream entrada = new ByteArrayInputStream(entradaSimulada.getBytes());
+        System.setIn(entrada);
 
         ByteArrayOutputStream salida = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
         System.setOut(new PrintStream(salida));
 
         double resultado = Formulario.formulario();
 
         System.setIn(System.in);
-        System.setOut(System.out);
+        System.setOut(originalOut);
 
         assertEquals(-1, resultado);
         assertTrue(salida.toString().contains("Entrada inválida"));
@@ -141,6 +147,8 @@ public class FormularioTest {
         assertFalse(Formulario.validar(9999.9, 500.0, 0.0, false));
     }
 }
+
+
 
 
 
