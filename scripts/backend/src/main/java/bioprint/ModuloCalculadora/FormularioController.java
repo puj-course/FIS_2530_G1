@@ -27,8 +27,6 @@ public class FormularioController {
     public FormularioController(Stage stage, String nombreUsuario){
         this.stage = stage;
         this.nombreUsuario = nombreUsuario;
-        ApplicationContext context = BioPrint.context;
-        puntajeService = context.getBean(PuntajeService.class);
     }
 
     public void mostrarPantallaDatosGenerales(){
@@ -273,7 +271,10 @@ public class FormularioController {
     }
 
     private void mostrarPantallaResultados(double total){
+        ApplicationContext context = BioPrint.context;
+        puntajeService = context.getBean(PuntajeService.class);
         puntajeService.registrarPuntaje(nombreUsuario, total);  
+        
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(20));
         grid.setVgap(10);
@@ -284,13 +285,12 @@ public class FormularioController {
             "Usuario: %s\nSu huella total anual por persona: %.2f kgCO2",
             nombreUsuario, total
         ));
-
+        long top = puntajeService.contarUsuariosConPuntajeMayor(nombreUsuario);
         // Consejo según el total
         Label consejo = new Label();
-        if(total < 2000) consejo.setText("Excelente: tu huella es muy baja.");
-        else if(total < 5000) consejo.setText("Moderada: podrías mejorar algunos hábitos.");
-        else consejo.setText("Alta: considera reducir transporte y consumo energético.");
-
+        if(total < 2000) consejo.setText("Excelente: tu huella es muy baja. Estás en el top "+top+" de los usuarios!");
+        else if(total < 5000) consejo.setText("Moderada: podrías mejorar algunos hábitos. Estás en el top "+top+" de los usuarios!");
+        else consejo.setText("Alta: considera reducir transporte y consumo energético. Estás en el top "+top+" de los usuarios!");
         // Botón para salir del programa
         Button salirButton = new Button("Salir del programa");
         salirButton.setOnAction(e -> {

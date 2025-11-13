@@ -32,29 +32,36 @@ public class LoginController extends javafx.application.Application {
     }
 
     private void mostrarPantallaInicio() {
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(20));
-        grid.setVgap(10);
-        grid.setHgap(10);
+    GridPane grid = new GridPane();
+    grid.setPadding(new Insets(20));
+    grid.setVgap(10);
+    grid.setHgap(10);
 
-        Label welcomeLabel = new Label("Bienvenido a BioPrint");
-        GridPane.setConstraints(welcomeLabel, 0, 0);
+    Label welcomeLabel = new Label("Bienvenido a BioPrint");
+    GridPane.setConstraints(welcomeLabel, 0, 0);
 
-        Button loginButton = new Button("Iniciar Sesión");
-        GridPane.setConstraints(loginButton, 0, 1);
+    Button loginButton = new Button("Iniciar Sesión");
+    GridPane.setConstraints(loginButton, 0, 1);
 
-        Button registerButton = new Button("Registrarse");
-        GridPane.setConstraints(registerButton, 1, 1);
+    Button registerButton = new Button("Registrarse");
+    GridPane.setConstraints(registerButton, 1, 1);
 
-        loginButton.setOnAction(e -> mostrarPantallaLogin());
-        registerButton.setOnAction(e -> mostrarPantallaRegistro());
+    // 🔹 Botón para salir de la aplicación
+    Button exitButton = new Button("Salir");
+    GridPane.setConstraints(exitButton, 2, 1);
+    exitButton.setOnAction(e -> {
+            primaryStage.close(); // Cierra la ventana actual
+            System.exit(0);});
 
-        grid.getChildren().addAll(welcomeLabel, loginButton, registerButton);
+    loginButton.setOnAction(e -> mostrarPantallaLogin());
+    registerButton.setOnAction(e -> mostrarPantallaRegistro());
 
-        Scene scene = new Scene(grid, 400, 150);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Bienvenida");
-        primaryStage.show();
+    grid.getChildren().addAll(welcomeLabel, loginButton, registerButton, exitButton);
+
+    Scene scene = new Scene(grid, 500, 150);
+    primaryStage.setScene(scene);
+    primaryStage.setTitle("Bienvenida");
+    primaryStage.show();
     }
 
     private void mostrarPantallaLogin() {
@@ -114,6 +121,10 @@ public class LoginController extends javafx.application.Application {
         registerButton.setOnAction(e -> {
             String nombre = userField.getText();
             String contrasena = passField.getText();
+            if(usuarioService.usuarioExiste(nombre)){
+                messageLabel.setText("Ya existe este usuario");
+                return;
+            }
             if(nombre.isEmpty() || contrasena.isEmpty()){
                 messageLabel.setText("Los campos no pueden estar vacíos");
                 return;
