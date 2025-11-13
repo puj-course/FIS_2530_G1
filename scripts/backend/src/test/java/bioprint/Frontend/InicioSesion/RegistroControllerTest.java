@@ -1,15 +1,23 @@
 package bioprint.Frontend.InicioSesion;
 
+import javafx.event.ActionEvent;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
 import java.io.IOException;
-
-
 import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class RegistroControllerTest {
 
@@ -79,7 +87,8 @@ public class RegistroControllerTest {
         controller.txtConfirmarContrasena.setText("Contra1$");
         assertDoesNotThrow(() -> controller.registrarUsuario(null));
     }
-      @Test
+
+    @Test
     void testLimpiarCampos() {
         controller.txtNombre.setText("Ana");
         controller.txtEmail.setText("ana@test.com");
@@ -99,13 +108,14 @@ public class RegistroControllerTest {
         assertDoesNotThrow(() -> controller.mostrarAlerta("Título", "Mensaje de prueba"));
     }
 
+    @Test
     void testInitializeCargaImagen() {
         controller.imagenMascota = new Circle();
         assertDoesNotThrow(controller::initialize);
     }
 
+    @Test
     void testGuardarUsuarioConExcepcion() throws Exception {
-        // Forzamos error al abrir conexión (URL inválida)
         Method m = RegistroController.class.getDeclaredMethod("guardarUsuario", String.class, String.class);
         m.setAccessible(true);
         boolean result = (boolean) m.invoke(controller, "nombre", "pass");
@@ -130,7 +140,7 @@ public class RegistroControllerTest {
 
         assertTrue((boolean) m.invoke(controller, "Contra#2025"));
         assertFalse((boolean) m.invoke(controller, "contrasena"));
-        assertFalse((boolean) m.invoke(controller, "CONTRASEÑA1"));
+        assertFalse((boolean) m.invoke(controller, "CONTRASENA1"));
     }
 
     @Test
@@ -145,16 +155,15 @@ public class RegistroControllerTest {
 
     @Test
     void testOnVolverSinExcepcion() throws IOException {
-        controller.txtNombre.setText("VolverTest");
-        // Simular un nodo y escena para el evento
-        Node node = mock(Node.class);
-        Stage stage = mock(Stage.class);
-        when(node.getScene()).thenReturn(new javafx.scene.Scene(new javafx.scene.Group()));
-        when(stage.getScene()).thenReturn(node.getScene());
+        // Simulamos un nodo con Mockito
+        Node node = Mockito.mock(Node.class);
+        Scene escena = new Scene(new Group());
+        when(node.getScene()).thenReturn(escena);
 
         ActionEvent event = new ActionEvent(node, null);
         assertDoesNotThrow(() -> controller.onVolver(event));
     }
+
     @Test
     void testRegistrarUsuarioServidorCaido() {
         controller.txtNombre.setText("Lina");
@@ -162,14 +171,15 @@ public class RegistroControllerTest {
         controller.txtContrasena.setText("Contra1$A");
         controller.txtConfirmarContrasena.setText("Contra1$A");
 
-        // No debe lanzar excepción aunque falle la conexión HTTP
         assertDoesNotThrow(() -> controller.registrarUsuario(null));
     }
 
     @Test
     void testInitializeMascota() {
+        controller.imagenMascota = new Circle();
         assertDoesNotThrow(() -> controller.initialize());
     }
 }
+
 
 
