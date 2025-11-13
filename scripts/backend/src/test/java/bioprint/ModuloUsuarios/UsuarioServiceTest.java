@@ -80,4 +80,52 @@ class UsuarioServiceTest {
         assertFalse(valido);
         verify(repo).findByNombreAndContrasena(nombre, contrasena);
     }
+    @Test
+void testListarDevuelveListaVacia() {
+    when(repo.findAll()).thenReturn(List.of());
+
+    List<Usuario> resultado = service.listar();
+
+    assertTrue(resultado.isEmpty());
+    verify(repo, times(1)).findAll();
 }
+    @Test
+void testGuardarLanzaExcepcionSiFallaRepositorio() {
+    Usuario u = new Usuario("error", "1234");
+    when(repo.save(u)).thenThrow(new RuntimeException("Error de BD"));
+
+    RuntimeException ex = assertThrows(RuntimeException.class, () -> service.guardar(u));
+    assertEquals("Error de BD", ex.getMessage());
+    verify(repo).save(u);
+}
+@Test
+void testValidarUsuarioConCamposNulos() {
+    boolean resultado = service.validarUsuario(null, null);
+    verify(repo).findByNombreAndContrasena(null, null);
+    assertFalse(resultado);
+}
+@Test
+void testValidarUsuarioConEspaciosOMayusculas() {
+    String nombre = " Pepe ";
+    String contrasena = "123";
+    when(repo.findByNombreAndContrasena(nombre.trim(), contrasena)).thenReturn(null);
+
+    // Este test simula que no se hace trim ni normalización
+    boolean valido = service.validarUsuario(nombre, contrasena);
+
+    assertFalse(valido);
+    verify(repo).findByNombreAndContrasena(nombre, contrasena);
+}
+@Test
+void testListarNoModificaListaOriginal() {
+    List<Usuario> original = Arrays.asList(new Usuario("a", "1"), new Usuario("b", "2"));
+    when(repo.findAll()).thenReturn(original);
+
+    List<Usuario> resultado = service.listar();
+
+    assertEquals(original, resultado);
+    assertNotSame(original, resultado); // si devuelves copia
+    verify(repo).findAll();
+}
+}
+
