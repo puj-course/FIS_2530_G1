@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,15 +16,17 @@ public class LoginControllerTest {
     private UsuarioService usuarioService;
     private Notificador notificador;
 
-    // --- Simulación simple del repositorio sin base de datos ---
-    static class FakeUsuarioRepository {
+    // --- Repositorio falso que implementa la interfaz real ---
+    static class FakeUsuarioRepository implements UsuarioRepository {
         private final List<Usuario> usuarios = new ArrayList<>();
 
+        @Override
         public List<Usuario> findAll() {
             return new ArrayList<>(usuarios);
         }
 
-        public Usuario save(Usuario u) {
+        @Override
+        public <S extends Usuario> S save(S u) {
             usuarios.removeIf(x -> x.getNombre().equals(u.getNombre()));
             usuarios.add(u);
             return u;
@@ -43,6 +46,23 @@ public class LoginControllerTest {
                     .findFirst()
                     .orElse(null);
         }
+
+        // --- Métodos vacíos obligatorios por JpaRepository ---
+        @Override public Optional<Usuario> findById(Long id) { return Optional.empty(); }
+        @Override public boolean existsById(Long id) { return false; }
+        @Override public long count() { return usuarios.size(); }
+        @Override public void deleteById(Long id) {}
+        @Override public void delete(Usuario entity) {}
+        @Override public void deleteAll(Iterable<? extends Usuario> entities) {}
+        @Override public void deleteAll() {}
+        @Override public <S extends Usuario> List<S> saveAll(Iterable<S> entities) { return null; }
+        @Override public List<Usuario> findAllById(Iterable<Long> ids) { return null; }
+        @Override public void flush() {}
+        @Override public <S extends Usuario> S saveAndFlush(S entity) { return null; }
+        @Override public void deleteAllInBatch() {}
+        @Override public void deleteAllInBatch(Iterable<Usuario> entities) {}
+        @Override public Usuario getOne(Long aLong) { return null; }
+        @Override public Usuario getById(Long aLong) { return null; }
     }
 
     @BeforeEach
@@ -96,6 +116,7 @@ public class LoginControllerTest {
                 "No debe validar credenciales incorrectas");
     }
 }
+
 
 
 
