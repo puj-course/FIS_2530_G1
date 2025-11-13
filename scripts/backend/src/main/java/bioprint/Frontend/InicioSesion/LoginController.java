@@ -1,217 +1,131 @@
 package bioprint.Frontend.InicioSesion;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
+
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.net.HttpURLConnection;
-import java.net.URL;
+public class LoginController {
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+    @FXML
+    public TextField txtUsuario;
 
-public class LoginControllerTest {
+    @FXML
+    public PasswordField txtPassword;
 
-    private LoginController controller;
+    @FXML
+    public Circle imagenCircular;
 
-    @BeforeEach
-    void setUp() {
-        controller = new LoginController();
-        controller.txtUsuario = new TextField();
-        controller.txtPassword = new PasswordField();
-        controller.imagenCircular = new Circle();
+    @FXML
+    public void iniciarSesion(ActionEvent event) {
+        System.out.println("Botón 'Iniciar sesión' presionado");
+
+        HttpURLConnection con = null;
+        try {
+            String usuario = txtUsuario.getText().trim();
+            String contrasena = txtPassword.getText().trim();
+
+            if (usuario.isEmpty() || contrasena.isEmpty()) {
+                mostrarAlerta("Campos vacíos", "Debe ingresar usuario y contraseña");
+                return;
+            }
+
+            URL url = new URL("http://localhost:8080/usuarios");
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Accept", "application/json");
+
+            int status = con.getResponseCode();
+
+            if (status == 200) {
+                Scanner sc = new Scanner(con.getInputStream());
+                String json = sc.useDelimiter("\\A").next();
+                sc.close();
+
+                boolean encontrado = false;
+
+                String[] usuarios = json.split("\\},\\{");
+                for (String u : usuarios) {
+                    if (u.contains("\"nombre\":\"" + usuario + "\"") &&
+                        u.contains("\"contrasena\":\"" + contrasena + "\"")) {
+                        encontrado = true;
+                        break;
+                    }
+                }
+
+                if (encontrado) {
+                    mostrarAlerta("Correcto", "Inicio de sesión exitoso");
+                    System.out.println("Usuario encontrado en la base de datos.");
+
+                    // 🔹 Cambiar de pantalla al menú
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/InicioSesion/menu.fxml"));
+                    Parent root = loader.load();
+                    Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(new Scene(root));
+                    stage.show();
+
+                } else {
+                    mostrarAlerta("Error", "Usuario o contraseña incorrecta ");
+                    System.out.println("Usuario NO encontrado en la base de datos.");
+                }
+
+            } else {
+                mostrarAlerta("Error", "No se pudo conectar con el servidor (código " + status + ")");
+            }
+
+        } catch (Exception e) {
+            mostrarAlerta("Error en la conexión", "Detalles: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            if (con != null) con.disconnect();
+        }
     }
 
-    @Test
-    void testIniciarSesionCamposVacios() {
-        controller.txtUsuario.setText("");
-        controller.txtPassword.setText("");
-        assertDoesNotThrow(() -> controller.iniciarSesion(null));
+    @FXML
+    public void onIrARegistro(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/InicioSesion/Registrarse.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            mostrarAlerta("Error", "No se pudo abrir la pantalla de registro");
+            e.printStackTrace();
+        }
     }
 
-    @Test
-    void testIniciarSesionUsuarioSinServidor() {
-        controller.txtUsuario.setText("testUser");
-        controller.txtPassword.setText("1234");
-        assertDoesNotThrow(() -> controller.iniciarSesion(null));
+    public void mostrarAlerta(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.show();
     }
 
-    @Test
-    void testOnIrARegistroManejoDeError() {
-        assertDoesNotThrow(() -> controller.onIrARegistro(null));
-    }
-
-    @Test
-    void testInitializeImagenCorrecta() {
-        controller.imagenCircular = new Circle();
-        assertDoesNotThrow(() -> controller.initialize());
-    }
-
-    @Test
-    void testMostrarAlertaReflection() throws Exception {
-        Method m = LoginController.class.getDeclaredMethod("mostrarAlerta", String.class, String.class);
-        m.setAccessible(true);
-        assertDoesNotThrow(() -> m.invoke(controller, "Título", "Mensaje de prueba"));
-    }
-
-    // 🔹 NUEVAS PRUEBAS
-
-    @Test
-    void testIniciarSesionUsuarioCorrectoJsonSimulado() throws Exception {
-        controller.txtUsuario.setText("Juan");
-        controller.txtPassword.setText("1234");
-
-        HttpURLConnection mockCon = mock(HttpURLConnection.class);
-        when(mockCon.getResponseCode()).thenReturn(200);
-        String jsonSimulado = "[{\"nombre\":\"Juan\",\"contrasena\":\"1234\"}]";
-        InputStream input = new ByteArrayInputStream(jsonSimulado.getBytes());
-        when(mockCon.getInputStream()).thenReturn(input);
-
-        URL mockUrl = mock(URL.class);
-        when(mockUrl.openConnection()).thenReturn(mockCon);
-
-        // Inyección por reflexión
-        Method iniciar = LoginController.class.getDeclaredMethod("iniciarSesion", ActionEvent.class);
-        iniciar.setAccessible(true);
-        iniciar.invoke(controller, (Object) null);
-        verify(mockCon).disconnect();
-    }
-
-    @Test
-    void testIniciarSesionServidorConError500() throws Exception {
-        controller.txtUsuario.setText("Admin");
-        controller.txtPassword.setText("12345");
-
-        HttpURLConnection mockCon = mock(HttpURLConnection.class);
-        when(mockCon.getResponseCode()).thenReturn(500);
-
-        URL mockUrl = mock(URL.class);
-        when(mockUrl.openConnection()).thenReturn(mockCon);
-
-        assertDoesNotThrow(() -> controller.iniciarSesion(null));
-    }
-
-    @Test
-    void testIniciarSesionUsuarioNoEncontrado() throws Exception {
-        controller.txtUsuario.setText("Desconocido");
-        controller.txtPassword.setText("xyz");
-
-        HttpURLConnection mockCon = mock(HttpURLConnection.class);
-        when(mockCon.getResponseCode()).thenReturn(200);
-        String jsonSimulado = "[{\"nombre\":\"Otro\",\"contrasena\":\"111\"}]";
-        InputStream input = new ByteArrayInputStream(jsonSimulado.getBytes());
-        when(mockCon.getInputStream()).thenReturn(input);
-
-        assertDoesNotThrow(() -> controller.iniciarSesion(null));
-    }
-
-    @Test
-    void testIniciarSesionLanzaExcepcion() throws Exception {
-        controller.txtUsuario.setText("Usuario");
-        controller.txtPassword.setText("123");
-
-        // Forzar error de conexión
-        URL mockUrl = mock(URL.class);
-        when(mockUrl.openConnection()).thenThrow(new RuntimeException("Error simulado"));
-        assertDoesNotThrow(() -> controller.iniciarSesion(null));
-    }
-
-    @Test
-    void testMostrarAlertaNoLanzaError() {
-        assertDoesNotThrow(() -> controller.mostrarAlerta("Aviso", "Mensaje de prueba"));
-    }
-
-    @Test
-    void testInitializeFallaCargaImagen() {
-        controller.imagenCircular = new Circle();
-        // Intentará cargar imagen inexistente
-        assertDoesNotThrow(() -> controller.initialize());
-    }
-
-    @Test
-    void testOnIrARegistroSinFXMLValido() {
-        assertDoesNotThrow(() -> controller.onIrARegistro(null));
-    }
-
-    @Test
-    void testCamposUsuarioYPasswordInicialmenteVacios() {
-        assertEquals("", controller.txtUsuario.getText());
-        assertEquals("", controller.txtPassword.getText());
-    }
-
-    @Test
-    void testCamposUsuarioYPasswordAsignacion() {
-        controller.txtUsuario.setText("Maria");
-        controller.txtPassword.setText("secreta");
-        assertEquals("Maria", controller.txtUsuario.getText());
-        assertEquals("secreta", controller.txtPassword.getText());
-    }
-
-    @Test
-    void testIniciarSesionConJsonVacio() throws Exception {
-        controller.txtUsuario.setText("Pedro");
-        controller.txtPassword.setText("123");
-
-        HttpURLConnection mockCon = mock(HttpURLConnection.class);
-        when(mockCon.getResponseCode()).thenReturn(200);
-        InputStream input = new ByteArrayInputStream("".getBytes());
-        when(mockCon.getInputStream()).thenReturn(input);
-
-        assertDoesNotThrow(() -> controller.iniciarSesion(null));
-    }
-
-    @Test
-    void testInitializeNoRompeSinImagenCircular() {
-        controller.imagenCircular = null;
-        assertDoesNotThrow(() -> controller.initialize());
-    }
-
-    @Test
-    void testIniciarSesionConFormatoJsonRaro() throws Exception {
-        controller.txtUsuario.setText("UsuarioRaro");
-        controller.txtPassword.setText("clave");
-
-        HttpURLConnection mockCon = mock(HttpURLConnection.class);
-        when(mockCon.getResponseCode()).thenReturn(200);
-        InputStream input = new ByteArrayInputStream("{malformado}".getBytes());
-        when(mockCon.getInputStream()).thenReturn(input);
-
-        assertDoesNotThrow(() -> controller.iniciarSesion(null));
-    }
-
-    @Test
-    void testReflectionDeCampos() throws Exception {
-        Field f = LoginController.class.getDeclaredField("txtUsuario");
-        assertNotNull(f);
-        assertEquals(TextField.class, f.getType());
-    }
-
-    @Test
-    void testReflectionDeMetodoMostrarAlertaExiste() throws Exception {
-        Method m = LoginController.class.getDeclaredMethod("mostrarAlerta", String.class, String.class);
-        assertNotNull(m);
-    }
-
-    @Test
-    void testInitializeCargaImagePattern() {
-        controller.imagenCircular = new Circle();
-        controller.initialize();
-        assertTrue(controller.imagenCircular.getFill() instanceof ImagePattern || controller.imagenCircular.getFill() == null);
+    @FXML
+    public void initialize() {
+        try {
+            Image img = new Image("/references/feliz.png");
+            imagenCircular.setFill(new ImagePattern(img));
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar la imagen: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
-
 
 
 
