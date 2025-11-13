@@ -1,23 +1,15 @@
 package bioprint.metricas;
 
-import com.github.javaparser.JavaParser;
-import com.github.javaparser.ParserConfiguration;
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.stmt.Statement;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-/**
- * Analizador de calidad del código fuente.
- * Calcula la Complejidad Ciclomática y el Índice de Mantenibilidad
- * de todas las clases en el paquete bioprint.
- *
- * Los resultados incluyen una interpretación cualitativa
- * para facilitar su comprensión.
- */
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParserConfiguration;
+import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.stmt.Statement;
+
 public class AnalizadorCalidad {
 
     public static int calcularComplejidadCiclomatica(File archivo) throws IOException {
@@ -85,42 +77,5 @@ public class AnalizadorCalidad {
             return "Aceptable (puede mejorarse la legibilidad o comentarios)";
         else
             return "Deficiente (recomendado refactorizar el código)";
-    }
-
-    public static void main(String[] args) throws IOException {
-        File carpeta = new File("src/main/java/bioprint");
-        if (!carpeta.exists()) {
-            System.out.println(" No se encontró el directorio: " + carpeta.getAbsolutePath());
-            return;
-        }
-
-        System.out.println("\n==========  ANÁLISIS DE CALIDAD DEL CÓDIGO  ==========\n");
-
-        Files.walk(carpeta.toPath())
-                .filter(p -> p.toString().endsWith(".java"))
-                .forEach(path -> {
-                    try {
-                        File archivo = path.toFile();
-                        int complejidad = calcularComplejidadCiclomatica(archivo);
-                        double mantenibilidad = calcularMantenibilidad(archivo, complejidad);
-
-                        System.out.println(" Archivo analizado: " + archivo.getName());
-                        System.out.println("    Complejidad ciclomática: " + complejidad +
-                                "  " + interpretarComplejidad(complejidad));
-                        System.out.printf("    Índice de mantenibilidad: %.2f  %s%n",
-                                mantenibilidad, interpretarMantenibilidad(mantenibilidad));
-                        System.out.println("------------------------------------------------------");
-
-                    } catch (Exception e) {
-                        System.out.println("[] No se pudo analizar " + path.getFileName() + ": " + e.getMessage());
-                    }
-                });
-
-        System.out.println("\n=======================================================");
-        System.out.println(" Interpretación general:");
-        System.out.println(" - La COMPLEJIDAD CICLOMÁTICA mide la cantidad de caminos lógicos posibles en el código.");
-        System.out.println("   Cuanto menor sea el valor, más sencillo y fácil de probar es el programa.");
-        System.out.println(" - El ÍNDICE DE MANTENIBILIDAD estima qué tan fácil es comprender, modificar y extender el código.");
-        System.out.println("   Valores altos indican mejor calidad estructural y legibilidad.\n");
     }
 }

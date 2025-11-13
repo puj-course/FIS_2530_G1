@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import org.junit.jupiter.api.AfterEach;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
@@ -68,10 +67,5 @@ class AnalizadorCalidadTest {
         assertTrue(AnalizadorCalidad.interpretarMantenibilidad(160).contains("Buena"));
         assertTrue(AnalizadorCalidad.interpretarMantenibilidad(120).contains("Aceptable"));
         assertTrue(AnalizadorCalidad.interpretarMantenibilidad(80).contains("Deficiente"));
-    }
-
-    @Test
-    void testMainEjecutaSinErrores() {
-        assertDoesNotThrow(() -> AnalizadorCalidad.main(new String[]{}));
     }
 }

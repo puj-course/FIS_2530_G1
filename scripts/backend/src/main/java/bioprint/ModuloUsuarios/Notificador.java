@@ -17,7 +17,6 @@ public class Notificador extends TelegramLongPollingBot {
     
     @Override
     public void onUpdateReceived(Update update) {
-        /* 
         // Solo responde si recibe texto
         if (update.hasMessage() && update.getMessage().hasText()) {
             String mensaje = update.getMessage().getText();
@@ -35,7 +34,6 @@ public class Notificador extends TelegramLongPollingBot {
                 }
             }
         }
-        */
     }
 
     @Override
@@ -48,13 +46,13 @@ public class Notificador extends TelegramLongPollingBot {
         return token;
     }
     public void enviarMensaje(String texto) {
-    SendMessage mensaje = new SendMessage(chatId.toString(), texto);
-    try {
-        execute(mensaje);
-        System.out.println("✅ Mensaje enviado a " + chatId);
-    } catch (TelegramApiException e) {
-        System.out.println("no se pudo enviar la notificacion");
+        SendMessage mensaje = new SendMessage(chatId.toString(), texto);
+        try {
+            execute(mensaje);
+            System.out.println("✅ Mensaje enviado a " + chatId);
+        } catch (TelegramApiException e) {
+            System.out.println("no se pudo enviar la notificacion");
+        }
     }
-}
 
 }

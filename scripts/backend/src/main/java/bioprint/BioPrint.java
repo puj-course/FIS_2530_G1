@@ -3,55 +3,19 @@ package bioprint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
-import bioprint.ModuloUsuarios.*;
-import bioprint.ModuloCalculadora.*;
+import bioprint.ModuloUsuarios.LoginController;
+import javafx.application.Application;
 
 @SpringBootApplication
 public class BioPrint {
+    public static ApplicationContext context;
+
     public static void main(String[] args) {
-        // Inicializar Spring Boot y obtener el contexto
-        ApplicationContext context = SpringApplication.run(BioPrint.class, args);
-        Notificador bot = new Notificador();
-        
-        // Obtener el bean UsuarioService
-        UsuarioService servicio = context.getBean(UsuarioService.class);
-        PuntajeService puntajeService = context.getBean(PuntajeService.class);
+        // Inicializar Spring Boot
+        context = SpringApplication.run(BioPrint.class, args);
 
-        boolean[] salirApp={false};
-        String[] nombre={""};
-
-        try {
-            TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-            botsApi.registerBot(bot);
-
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-        
-        while(!salirApp[0]){
-            while(!MenuUsuarios.menu(servicio, salirApp, bot, nombre));
-            if(!salirApp[0]){
-                double total=Formulario.formulario();
-                puntajeService.registrarPuntaje(nombre[0], total);
-            }
-        }
-        SpringApplication.exit(context, () -> 0);
-        /* 
-        // Crear un usuario
-        Usuario usuario = new Usuario();
-        usuario.setNombre("Prueba Java");
-        usuario.setEmail(":(pipipi@ayuda.com");
-        Usuario creado = usuarioService.guardar(usuario);
-        System.out.println("Usuario creado: " + creado.getNombre() + " ID: " + creado.getId());
-        
-        // Eliminar un usuario por ID
-        usuarioService.eliminar(creado.getId());
-        System.out.println("Usuario eliminado con ID: " + creado.getId());
-        */
+        // Lanzar JavaFX
+        Application.launch(LoginController.class, args);
     }
 }
-
