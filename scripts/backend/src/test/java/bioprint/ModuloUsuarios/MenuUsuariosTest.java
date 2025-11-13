@@ -1,4 +1,4 @@
-package bioprint.ModuloUsuarios;
+package bioprint.modulousuarios;
 
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;

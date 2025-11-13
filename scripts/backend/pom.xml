@@ -58,30 +58,27 @@
 
     <!-- TestFX for JavaFX UI testing -->
     <dependency>
-        <groupId>org.testfx</groupId>
-        <artifactId>testfx-core</artifactId>
-        <version>4.0.17-alpha</version>
-        <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.testfx</groupId>
-        <artifactId>testfx-junit5</artifactId>
-        <version>4.0.17-alpha</version>
-        <scope>test</scope>
-    </dependency>
-    <!-- Optional: Headless testing -->
-    <dependency>
-        <groupId>org.testfx</groupId>
-        <artifactId>openjfx-monocle</artifactId>
-        <version>jdk-17+0.0.7</version>
-        <scope>test</scope>
-    </dependency>
-
+		<groupId>org.testfx</groupId>
+		<artifactId>testfx-core</artifactId>
+		<version>4.0.16-alpha</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.testfx</groupId>
+		<artifactId>testfx-junit5</artifactId>
+		<version>4.0.16-alpha</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.testfx</groupId>
+		<artifactId>openjfx-monocle</artifactId>
+		<version>jdk-11+26</version>
+		<scope>test</scope>
+	</dependency>
     <!-- Mockito for mocking -->
     <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
-        <version>5.17.0</version>
         <scope>test</scope>
     </dependency>
 

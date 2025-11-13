@@ -1,10 +1,17 @@
+package bioprint.modulocalculadora;
+
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
 
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+
 import org.junit.jupiter.api.*;
-import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.framework.junit5.*;
+
+import bioprint.modulocalculadora.FormularioController;
 
 public class FormularioControllerTest extends ApplicationTest {
 
@@ -65,21 +72,28 @@ public class FormularioControllerTest extends ApplicationTest {
 
     @Test
     public void testFullFormFlow() {
+        // Step 0: Show the first screen
         interact(() -> controller.mostrarPantallaDatosGenerales());
 
-        // Step 1: Datos Generales
-        TextField personasInput = lookup(".text-field").query();
-        Button nextButton = lookup(".button").query();
+        // ---------------- Step 1: Datos Generales ----------------
+        TextField personasInput = lookup(".text-field").queryAs(TextField.class);
+        Button nextButton = lookup(".button").queryAs(Button.class);
+
         interact(() -> personasInput.setText("3"));
-        interact(() -> nextButton.fire());
+        interact(nextButton::fire);
+
         assertEquals(3, controller.personas);
 
-        // Step 2: Electricidad
-        ComboBox<String> fuenteCombo = lookup(".combo-box").query();
-        TextField luzInput = lookupAll(".text-field").stream().filter(tf -> tf.isVisible()).toList().get(0);
-        TextField gasInput = lookupAll(".text-field").stream().filter(tf -> tf.isVisible()).toList().get(1);
-        TextField aguaInput = lookupAll(".text-field").stream().filter(tf -> tf.isVisible()).toList().get(2);
-        Button nextElectricidad = lookup(".button").query();
+        // ---------------- Step 2: Electricidad ----------------
+        List<TextField> textFieldsStep2 = lookup(".text-field").queryAllAs(TextField.class).stream()
+                .filter(TextField::isVisible)
+                .toList();
+        TextField luzInput = textFieldsStep2.get(0);
+        TextField gasInput = textFieldsStep2.get(1);
+        TextField aguaInput = textFieldsStep2.get(2);
+
+        ComboBox<String> fuenteCombo = lookup(".combo-box").queryAs(ComboBox.class);
+        Button nextElectricidad = lookup(".button").queryAs(Button.class);
 
         interact(() -> {
             luzInput.setText("100");
@@ -87,36 +101,48 @@ public class FormularioControllerTest extends ApplicationTest {
             aguaInput.setText("30");
             fuenteCombo.getSelectionModel().select("Solar");
         });
-        interact(() -> nextElectricidad.fire());
+        interact(nextElectricidad::fire);
 
         assertEquals(100, controller.luz, 0.01);
         assertEquals(50, controller.gas, 0.01);
         assertEquals(30, controller.agua, 0.01);
-        assertEquals(2, controller.fuenteEnergia); // Solar = index 1 +1
+        assertEquals(2, controller.fuenteEnergia); // Assuming Solar = index 1 +1
 
-        // Step 3: Agua
-        TextField duchasInput = lookupAll(".text-field").stream().filter(tf -> tf.isVisible()).toList().get(0);
-        TextField duracionInput = lookupAll(".text-field").stream().filter(tf -> tf.isVisible()).toList().get(1);
-        TextField ahorradorInput = lookupAll(".text-field").stream().filter(tf -> tf.isVisible()).toList().get(2);
-        Button nextAgua = lookup(".button").query();
+        // ---------------- Step 3: Agua ----------------
+        List<TextField> textFieldsStep3 = lookup(".text-field").queryAllAs(TextField.class).stream()
+                .filter(TextField::isVisible)
+                .toList();
+        TextField duchasInput = textFieldsStep3.get(0);
+        TextField duracionInput = textFieldsStep3.get(1);
+        TextField ahorradorInput = textFieldsStep3.get(2);
+
+        Button nextAgua = lookup(".button").queryAs(Button.class);
 
         interact(() -> {
             duchasInput.setText("2");
             duracionInput.setText("10");
             ahorradorInput.setText("1");
         });
-        interact(() -> nextAgua.fire());
+        interact(nextAgua::fire);
 
         assertEquals(2, controller.duchas);
         assertEquals(10, controller.duracionDucha);
         assertEquals(1, controller.ahorrador);
 
-        // Step 4: Transporte
-        ComboBox<String> transporteCombo = lookupAll(".combo-box").get(0);
-        TextField kmInput = lookupAll(".text-field").stream().filter(tf -> tf.isVisible()).toList().get(0);
-        TextField diasInput = lookupAll(".text-field").stream().filter(tf -> tf.isVisible()).toList().get(1);
-        ComboBox<String> vuelosCombo = lookupAll(".combo-box").get(1);
-        Button nextTransporte = lookup(".button").query();
+        // ---------------- Step 4: Transporte ----------------
+        List<ComboBox> comboBoxesStep4 = lookup(".combo-box").queryAllAs(ComboBox.class).stream()
+                .filter(c -> c.isVisible())
+                .toList();
+        ComboBox<String> transporteCombo = comboBoxesStep4.get(0);
+        ComboBox<String> vuelosCombo = comboBoxesStep4.get(1);
+
+        List<TextField> textFieldsStep4 = lookup(".text-field").queryAllAs(TextField.class).stream()
+                .filter(TextField::isVisible)
+                .toList();
+        TextField kmInput = textFieldsStep4.get(0);
+        TextField diasInput = textFieldsStep4.get(1);
+
+        Button nextTransporte = lookup(".button").queryAs(Button.class);
 
         interact(() -> {
             transporteCombo.getSelectionModel().select("Carro gasolina");
@@ -124,17 +150,21 @@ public class FormularioControllerTest extends ApplicationTest {
             diasInput.setText("5");
             vuelosCombo.getSelectionModel().select("1-2");
         });
-        interact(() -> nextTransporte.fire());
+        interact(nextTransporte::fire);
 
         assertEquals(1, controller.tipoTransporte);
         assertEquals(2, controller.vuelos);
 
-        // Step 5: Alimentación
-        ComboBox<String> dietaCombo = lookupAll(".combo-box").get(0);
-        ComboBox<String> carneCombo = lookupAll(".combo-box").get(1);
-        ComboBox<String> lacteosCombo = lookupAll(".combo-box").get(2);
-        ComboBox<String> origenCombo = lookupAll(".combo-box").get(3);
-        Button finishButton = lookup(".button").query();
+        // ---------------- Step 5: Alimentación ----------------
+        List<ComboBox> comboBoxesStep5 = lookup(".combo-box").queryAllAs(ComboBox.class).stream()
+                .filter(c -> c.isVisible())
+                .toList();
+        ComboBox<String> dietaCombo = comboBoxesStep5.get(0);
+        ComboBox<String> carneCombo = comboBoxesStep5.get(1);
+        ComboBox<String> lacteosCombo = comboBoxesStep5.get(2);
+        ComboBox<String> origenCombo = comboBoxesStep5.get(3);
+
+        Button finishButton = lookup(".button").queryAs(Button.class);
 
         interact(() -> {
             dietaCombo.getSelectionModel().select("Omnívora");
@@ -142,17 +172,16 @@ public class FormularioControllerTest extends ApplicationTest {
             lacteosCombo.getSelectionModel().select("1-2/semana");
             origenCombo.getSelectionModel().select("Locales");
         });
-        interact(() -> finishButton.fire());
+        interact(finishButton::fire);
 
         assertEquals(3, controller.tipoDieta);
         assertEquals(3, controller.carne);
         assertEquals(2, controller.lacteos);
         assertEquals(1, controller.origen);
 
-        // Step 6: Resultados
-        // After finishing, the stage should display results scene
+        // ---------------- Step 6: Resultados ----------------
         assertEquals("Resultados - Huella de Carbono", stage.getTitle());
-        Label label = lookup(".label").query();
+        Label label = lookup(".label").queryAs(Label.class);
         assertTrue(label.getText().contains("testUser"));
     }
 
