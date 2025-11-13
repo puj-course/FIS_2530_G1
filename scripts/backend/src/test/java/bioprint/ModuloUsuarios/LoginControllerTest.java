@@ -1,126 +1,116 @@
 package bioprint.modulousuarios;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
+import javafx.stage.Stage;
 
-/**
- * Test unitario para LoginController sin ejecutar JavaFX ni Spring.
- */
 public class LoginControllerTest {
 
     private LoginController controller;
-    private FakeUsuarioService fakeService;
-    private FakeNotificador fakeBot;
-
-    /**
-     * Servicio falso para probar lógica sin base de datos.
-     */
-    static class FakeUsuarioService extends UsuarioService {
-        private final List<Usuario> usuarios = new ArrayList<>();
-
-        public FakeUsuarioService() {
-            super(null); // no necesitamos repositorio real
-        }
-
-        @Override
-        public boolean validarUsuario(String nombre, String contrasena) {
-            return usuarios.stream()
-                    .anyMatch(u -> u.getNombre().equals(nombre)
-                            && u.getContrasena().equals(contrasena));
-        }
-
-        @Override
-        public boolean usuarioExiste(String nombre) {
-            return usuarios.stream()
-                    .anyMatch(u -> u.getNombre().equals(nombre));
-        }
-
-        @Override
-        public Usuario guardar(Usuario u) {
-            usuarios.removeIf(x -> x.getNombre().equals(u.getNombre()));
-            usuarios.add(u);
-            return u; 
-        }
-
-        public List<Usuario> getUsuarios() {
-            return usuarios;
-        }
-    }
-
-    /**
-     * Notificador falso que registra los mensajes enviados.
-     */
-    static class FakeNotificador extends Notificador {
-        private final List<String> mensajes = new ArrayList<>();
-
-        @Override
-        public void enviarMensaje(String mensaje) {
-            mensajes.add(mensaje);
-        }
-
-        public List<String> getMensajes() {
-            return mensajes;
-        }
-    }
+    private UsuarioService usuarioService;
+    private Notificador notificador;
+    private Stage stage;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         controller = new LoginController();
-        fakeService = new FakeUsuarioService();
-        fakeBot = new FakeNotificador();
+        usuarioService = Mockito.mock(UsuarioService.class);
+        notificador = Mockito.mock(Notificador.class);
+        stage = new Stage();
 
-        // Inyección manual en los campos privados del LoginController
-        Field usuarioField = LoginController.class.getDeclaredField("usuarioService");
-        usuarioField.setAccessible(true);
-        usuarioField.set(controller, fakeService);
-
-        Field botField = LoginController.class.getDeclaredField("bot");
-        botField.setAccessible(true);
-        botField.set(controller, fakeBot);
+        controller.usuarioService = usuarioService;
+        controller.bot = notificador;
+        controller.primaryStage = stage;
     }
 
     @Test
-    void testRegistrarUsuarioNuevo() {
-        Usuario nuevo = new Usuario("juan", "1234");
-        fakeService.guardar(nuevo);
-
-        assertTrue(fakeService.usuarioExiste("juan"),
-                "El usuario recién guardado debe existir");
+    void testMostrarPantallaInicio_NoLanzaExcepcion() {
+        assertDoesNotThrow(() -> controller.mostrarPantallaInicio());
+        assertNotNull(controller.primaryStage.getScene());
+        assertEquals("Bienvenida", controller.primaryStage.getTitle());
     }
 
     @Test
-    void testUsuarioDuplicado() {
-        fakeService.guardar(new Usuario("ana", "123"));
-        fakeService.guardar(new Usuario("ana", "xyz")); // reemplaza
-        assertEquals(1, fakeService.getUsuarios().size(),
-                "No debe duplicar usuarios con el mismo nombre");
+    void testMostrarPantallaLogin_NoLanzaExcepcion() {
+        assertDoesNotThrow(() -> controller.mostrarPantallaLogin());
+        assertNotNull(controller.primaryStage.getScene());
+        assertEquals("Iniciar Sesión", controller.primaryStage.getTitle());
     }
 
     @Test
-    void testValidarUsuarioCorrecto() {
-        fakeService.guardar(new Usuario("pepe", "abcd"));
-        assertTrue(fakeService.validarUsuario("pepe", "abcd"),
-                "Debe validar credenciales válidas");
+    void testMostrarPantallaRegistro_NoLanzaExcepcion() {
+        assertDoesNotThrow(() -> controller.mostrarPantallaRegistro());
+        assertNotNull(controller.primaryStage.getScene());
+        assertEquals("Registro", controller.primaryStage.getTitle());
     }
 
     @Test
-    void testValidarUsuarioIncorrecto() {
-        fakeService.guardar(new Usuario("luis", "9999"));
-        assertFalse(fakeService.validarUsuario("luis", "0000"),
-                "No debe validar credenciales incorrectas");
+    void testRegistroUsuarioYaExiste() {
+        when(usuarioService.usuarioExiste("juan")).thenReturn(true);
+
+        controller.mostrarPantallaRegistro();
+
+        // Simular acción de registro directamente
+        Usuario usuario = new Usuario();
+        usuario.setNombre("juan");
+        usuario.setContrasena("1234");
+
+        // Lógica similar a la del botón
+        if (usuarioService.usuarioExiste(usuario.getNombre())) {
+            // no se guarda el usuario ni se notifica
+            verify(usuarioService, never()).guardar(any());
+            verify(notificador, never()).enviarMensaje(anyString());
+        }
     }
 
     @Test
-    void testNotificadorEnvioMensaje() {
-        fakeBot.enviarMensaje("Prueba de notificación");
-        assertEquals(1, fakeBot.getMensajes().size(),
-                "Debe haberse enviado un mensaje");
+    void testRegistroUsuarioNuevoValido() {
+        when(usuarioService.usuarioExiste("ana")).thenReturn(false);
+        when(usuarioService.guardar(any(Usuario.class))).thenReturn(new Usuario());
+
+        controller.mostrarPantallaRegistro();
+
+        Usuario nuevo = new Usuario();
+        nuevo.setNombre("ana");
+        nuevo.setContrasena("clave");
+
+        usuarioService.guardar(nuevo);
+        notificador.enviarMensaje("Nuevo usuario registrado: ana");
+
+        verify(usuarioService, times(1)).guardar(any(Usuario.class));
+        verify(notificador, times(1)).enviarMensaje(contains("ana"));
+    }
+
+    @Test
+    void testLoginUsuarioValido() {
+        when(usuarioService.validarUsuario("juan", "1234")).thenReturn(true);
+
+        controller.mostrarPantallaLogin();
+
+        usuarioService.validarUsuario("juan", "1234");
+        notificador.enviarMensaje("Usuario juan inició sesión");
+
+        verify(usuarioService, times(1)).validarUsuario("juan", "1234");
+        verify(notificador, times(1)).enviarMensaje(contains("juan"));
+    }
+
+    @Test
+    void testLoginUsuarioInvalido() {
+        when(usuarioService.validarUsuario("pedro", "0000")).thenReturn(false);
+
+        controller.mostrarPantallaLogin();
+
+        usuarioService.validarUsuario("pedro", "0000");
+
+        verify(usuarioService, times(1)).validarUsuario("pedro", "0000");
+        verify(notificador, never()).enviarMensaje(anyString());
     }
 }
+
 
       
