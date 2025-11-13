@@ -1,9 +1,9 @@
-package bioprint.ModuloCalculadora;
+package bioprint.modulocalculadora;
 
 import org.springframework.context.ApplicationContext;
 
 import bioprint.BioPrint;
-import bioprint.ModuloUsuarios.PuntajeService;
+import bioprint.modulousuarios.PuntajeService;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,14 +15,14 @@ import javafx.stage.Stage;
 
 public class FormularioController {
 
-    private Stage stage;
-    private String nombreUsuario;
-    private PuntajeService puntajeService;
-    private int personas, bombillos, aparatos, duchas, duracionDucha, ahorrador, tipoTransporte, vuelos, tipoDieta, carne, lacteos, origen;
-    private double luz, gas, agua;
-    private int fuenteEnergia;
+    public Stage stage;
+    public String nombreUsuario;
+    public PuntajeService puntajeService;
+    public int personas, bombillos, aparatos, duchas, duracionDucha, ahorrador, tipoTransporte, vuelos, tipoDieta, carne, lacteos, origen;
+    public double luz, gas, agua;
+    public int fuenteEnergia;
 
-    private GrupoFuentes grupo = new GrupoFuentes(); // Composite
+    public GrupoFuentes grupo = new GrupoFuentes(); // Composite
 
     public FormularioController(Stage stage, String nombreUsuario){
         this.stage = stage;
@@ -57,7 +57,7 @@ public class FormularioController {
         stage.show();
     }
 
-    private void mostrarPantallaElectricidad() {
+    public void mostrarPantallaElectricidad() {
         GridPane grid = crearGrid();
 
         Label labelLuz = new Label("Consumo mensual electricidad (kWh):");
@@ -109,7 +109,7 @@ public class FormularioController {
         stage.show();
     }
 
-    private void mostrarPantallaAgua() {
+    public void mostrarPantallaAgua() {
         GridPane grid = crearGrid();
 
         Label labelDuchas = new Label("Número de duchas al día (por persona):");
@@ -150,7 +150,7 @@ public class FormularioController {
         stage.show();
     }
 
-    private void mostrarPantallaTransporte() {
+    public void mostrarPantallaTransporte() {
         GridPane grid = crearGrid();
 
         Label labelTransporte = new Label("Tipo de transporte:");
@@ -215,7 +215,7 @@ public class FormularioController {
         stage.show();
     }
 
-    private void mostrarPantallaAlimentacion() {
+    public void mostrarPantallaAlimentacion() {
         GridPane grid = crearGrid();
 
         Label labelDieta = new Label("Tipo de dieta:");
@@ -270,7 +270,7 @@ public class FormularioController {
         stage.show();
     }
 
-    private void mostrarPantallaResultados(double total){
+    public void mostrarPantallaResultados(double total){
         ApplicationContext context = BioPrint.context;
         puntajeService = context.getBean(PuntajeService.class);
         puntajeService.registrarPuntaje(nombreUsuario, total);  
@@ -309,7 +309,7 @@ public class FormularioController {
         stage.show();
     }
 
-    private GridPane crearGrid() {
+    public GridPane crearGrid() {
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(20));
         grid.setVgap(10);
@@ -317,7 +317,7 @@ public class FormularioController {
         return grid;
     }
 
-    private void agregarGrid(GridPane grid, Label label, TextField input, Button next, Label error) {
+    public void agregarGrid(GridPane grid, Label label, TextField input, Button next, Label error) {
         grid.addRow(0, label, input);
         grid.addRow(1, next, error);
     }

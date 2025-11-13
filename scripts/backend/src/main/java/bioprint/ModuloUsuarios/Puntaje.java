@@ -1,4 +1,4 @@
-package bioprint.ModuloUsuarios;
+package bioprint.modulousuarios;
 
 import jakarta.persistence.*;
 import lombok.*;

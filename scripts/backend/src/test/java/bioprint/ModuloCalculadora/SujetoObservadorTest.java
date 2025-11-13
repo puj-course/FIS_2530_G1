@@ -1,7 +1,10 @@
-package bioprint.ModuloCalculadora;
+package bioprint.modulocalculadora;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import bioprint.modulocalculadora.Observador;
+import bioprint.modulocalculadora.Sujeto;
 
 class SujetoObservadorTest {
 

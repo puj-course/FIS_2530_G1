@@ -1,9 +1,9 @@
-package bioprint.ModuloUsuarios;
+package bioprint.modulousuarios;
 
 import org.springframework.context.ApplicationContext;
 
 import bioprint.BioPrint;
-import bioprint.ModuloCalculadora.FormularioController;
+import bioprint.modulocalculadora.FormularioController;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,10 +15,10 @@ import javafx.stage.Stage;
 
 public class LoginController extends javafx.application.Application {
 
-    private Stage primaryStage;
-    private UsuarioService usuarioService;
+    public Stage primaryStage;
+    public UsuarioService usuarioService;
     
-    private Notificador bot;
+    public Notificador bot;
 
     @Override
     public void start(Stage stage) {
@@ -31,7 +31,7 @@ public class LoginController extends javafx.application.Application {
         mostrarPantallaInicio();
     }
 
-    private void mostrarPantallaInicio() {
+    public void mostrarPantallaInicio() {
     GridPane grid = new GridPane();
     grid.setPadding(new Insets(20));
     grid.setVgap(10);
@@ -64,7 +64,7 @@ public class LoginController extends javafx.application.Application {
     primaryStage.show();
     }
 
-    private void mostrarPantallaLogin() {
+    public void mostrarPantallaLogin() {
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(20));
         grid.setVgap(10);
@@ -103,7 +103,7 @@ public class LoginController extends javafx.application.Application {
         primaryStage.setTitle("Iniciar Sesión");
     }
 
-    private void mostrarPantallaRegistro() {
+    public void mostrarPantallaRegistro() {
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(20));
         grid.setVgap(10);

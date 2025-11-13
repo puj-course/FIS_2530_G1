@@ -1,4 +1,4 @@
-package bioprint.ModuloCalculadora;
+package bioprint.modulocalculadora;
 
 public class EstrategiaCarro implements EstrategiaTransporte {
     @Override

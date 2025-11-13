@@ -1,6 +1,11 @@
-package bioprint.ModuloCalculadora;
+package bioprint.modulocalculadora;
 
 import org.junit.jupiter.api.Test;
+
+import bioprint.modulocalculadora.EstrategiaBici;
+import bioprint.modulocalculadora.EstrategiaBus;
+import bioprint.modulocalculadora.EstrategiaCarro;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EstrategiaTransporteTest {

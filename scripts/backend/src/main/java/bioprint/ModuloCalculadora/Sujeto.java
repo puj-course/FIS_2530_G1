@@ -1,10 +1,10 @@
-package bioprint.ModuloCalculadora;
+package bioprint.modulocalculadora;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Sujeto {
-    private List<Observador> observadores = new ArrayList<>();
+    public List<Observador> observadores = new ArrayList<>();
 
     public void addObservador(Observador o) {
         observadores.add(o);

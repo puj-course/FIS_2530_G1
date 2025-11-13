@@ -1,4 +1,4 @@
-package bioprint.ModuloUsuarios;
+package bioprint.modulousuarios;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class Notificador extends TelegramLongPollingBot {
     Long chatId=-4944571794L;
-    private final String token;;
+    public final String token;;
 
     public Notificador() {
         this.token= "8431776515:AAHvy_hCU9ghIKs_Wn3LODq4jM1CKKjc994";

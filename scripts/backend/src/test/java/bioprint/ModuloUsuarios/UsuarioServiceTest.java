@@ -1,4 +1,4 @@
-package bioprint.ModuloUsuarios;
+package bioprint.modulousuarios;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +15,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
+
+import bioprint.modulousuarios.Usuario;
+import bioprint.modulousuarios.UsuarioRepository;
+import bioprint.modulousuarios.UsuarioService;
 
 class UsuarioServiceTest {
 

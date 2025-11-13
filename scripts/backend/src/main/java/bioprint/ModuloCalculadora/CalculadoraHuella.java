@@ -1,9 +1,9 @@
-package bioprint.ModuloCalculadora;
+package bioprint.modulocalculadora;
 
 public class CalculadoraHuella {
-    private static CalculadoraHuella instancia;
+    public static CalculadoraHuella instancia;
 
-    private CalculadoraHuella() {}
+    public CalculadoraHuella() {}
 
     public static CalculadoraHuella getInstance() {
         if (instancia == null) instancia = new CalculadoraHuella();

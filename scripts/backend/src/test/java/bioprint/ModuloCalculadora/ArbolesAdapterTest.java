@@ -1,6 +1,9 @@
-package bioprint.ModuloCalculadora;
+package bioprint.modulocalculadora;
 
 import org.junit.jupiter.api.Test;
+
+import bioprint.modulocalculadora.ArbolesAdapter;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ArbolesAdapterTest {

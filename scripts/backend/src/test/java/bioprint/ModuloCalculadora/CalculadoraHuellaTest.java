@@ -1,6 +1,14 @@
-package bioprint.ModuloCalculadora;
+package bioprint.modulocalculadora;
 
 import org.junit.jupiter.api.Test;
+
+import bioprint.modulocalculadora.ArbolesAdapter;
+import bioprint.modulocalculadora.EstrategiaCarro;
+import bioprint.modulocalculadora.EstrategiaTransporte;
+import bioprint.modulocalculadora.FuenteHuella;
+import bioprint.modulocalculadora.FuenteHuellaFactory;
+import bioprint.modulocalculadora.Transporte;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CalculadoraHuellaTest {

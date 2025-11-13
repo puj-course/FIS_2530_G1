@@ -1,11 +1,11 @@
-package bioprint.ModuloCalculadora;
+package bioprint.modulocalculadora;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GrupoFuentes implements FuenteHuella {
     
-    private List<FuenteHuella> fuentes = new ArrayList<>();
+    public List<FuenteHuella> fuentes = new ArrayList<>();
 
     public GrupoFuentes() {
         this.fuentes = new ArrayList<>();

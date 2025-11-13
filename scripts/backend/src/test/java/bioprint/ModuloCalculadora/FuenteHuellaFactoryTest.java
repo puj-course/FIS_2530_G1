@@ -1,7 +1,10 @@
-package bioprint.ModuloCalculadora;
+package bioprint.modulocalculadora;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
+import bioprint.modulocalculadora.FuenteHuella;
+import bioprint.modulocalculadora.FuenteHuellaFactory;
 
 public class FuenteHuellaFactoryTest {
 

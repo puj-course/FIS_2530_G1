@@ -1,4 +1,4 @@
-package bioprint.ModuloUsuarios;
+package bioprint.modulousuarios;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PuntajeService {
-    private final PuntajeRepository repo;
-    private final UsuarioRepository usuarioRepo;
+    public final PuntajeRepository repo;
+    public final UsuarioRepository usuarioRepo;
 
     public PuntajeService(PuntajeRepository repo, UsuarioRepository usuarioRepo) {
         this.repo = repo;

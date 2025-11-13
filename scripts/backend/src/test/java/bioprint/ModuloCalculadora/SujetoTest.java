@@ -1,6 +1,9 @@
-package bioprint.ModuloCalculadora;
+package bioprint.modulocalculadora;
 
 import org.junit.jupiter.api.Test;
+
+import bioprint.modulocalculadora.Sujeto;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SujetoTest {

@@ -1,8 +1,8 @@
-package bioprint.ModuloCalculadora;
+package bioprint.modulocalculadora;
 
 public class Transporte implements FuenteHuella {
-    private EstrategiaTransporte estrategia;
-    private double km;
+    public EstrategiaTransporte estrategia;
+    public double km;
 
     public Transporte(EstrategiaTransporte estrategia, double km) {
         this.estrategia = estrategia;
