@@ -4,6 +4,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.io.IOException;
+
 
 import java.lang.reflect.Method;
 
@@ -169,4 +171,5 @@ public class RegistroControllerTest {
         assertDoesNotThrow(() -> controller.initialize());
     }
 }
+
 
